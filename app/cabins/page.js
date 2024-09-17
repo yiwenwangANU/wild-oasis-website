@@ -7,11 +7,11 @@ async function page() {
   return (
     <>
       <h1>Cabins Page</h1>
-      <ui>
+      <ul>
         {data.map((item) => (
           <li key={item.id}>{item.name}</li>
         ))}
-      </ui>
+      </ul>
       <Counter users={data} />
     </>
   );
