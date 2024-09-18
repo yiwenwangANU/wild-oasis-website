@@ -30,15 +30,20 @@ function page() {
           being together in a beautiful setting.
         </p>
       </div>
-      <Image
-        className="inline-block col-span-2"
-        src={about_1}
-        alt="cabin image"
-      />
+      <div className="relative aspect-square col-span-2">
+        <Image
+          className="object-cover"
+          placeholder="blur"
+          fill
+          src={about_1}
+          alt="cabin image"
+        />
+      </div>
 
       <Image
         className="inline-block col-span-2"
         src={about_2}
+        placeholder="blur"
         alt="cabin image"
       />
       <div className="col-span-4">
