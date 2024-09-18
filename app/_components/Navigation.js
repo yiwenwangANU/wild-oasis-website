@@ -7,14 +7,6 @@ function Navigation() {
         <li>
           <Link
             className="hover:text-accent-400 transition-colors"
-            href="/account"
-          >
-            Account Page
-          </Link>
-        </li>
-        <li>
-          <Link
-            className="hover:text-accent-400 transition-colors"
             href="/cabins"
           >
             Cabins
@@ -26,6 +18,14 @@ function Navigation() {
             href="/about"
           >
             About Page
+          </Link>
+        </li>
+        <li>
+          <Link
+            className="hover:text-accent-400 transition-colors"
+            href="/account"
+          >
+            Guest Area
           </Link>
         </li>
       </ul>

@@ -1,5 +1,3 @@
-import Counter from "@/app/_components/Counter";
-
 export const metadata = {
   title: "Cabins",
 };
@@ -10,13 +8,15 @@ async function page() {
   console.log(data);
   return (
     <>
-      <h1>Cabins Page</h1>
-      <ul>
-        {data.map((item) => (
-          <li key={item.id}>{item.name}</li>
-        ))}
-      </ul>
-      <Counter users={data} />
+      <h1 className="text-4xl text-accent-400 py-4">Our Luxury Cabins</h1>
+      <p className="text-primary-200 text-lg md-10">
+        Cozy yet luxurious cabins, located right in the heart of the Italian
+        Dolomites. Imagine waking up to beautiful mountain views, spending your
+        days exploring the dark forests around, or just relaxing in your private
+        hot tub under the stars. Enjoy nature&apos;s beauty in your own little
+        home away from home. The perfect spot for a peaceful, calm vacation.
+        Welcome to paradise.
+      </p>
     </>
   );
 }
