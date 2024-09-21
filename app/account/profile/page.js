@@ -1,3 +1,5 @@
+import GuestForm from "@/app/_components/GuestForm";
+
 function page() {
   return (
     <div className="px-12 py-4 ">
@@ -8,6 +10,7 @@ function page() {
         Providing the following information will make your check-in process
         faster and smoother. See you soon!
       </p>
+      <GuestForm />
     </div>
   );
 }
