@@ -21,27 +21,22 @@ const navLinks = [
 
 function SideNavigation() {
   return (
-    <nav className="border-r border-primary-900 ">
-      <ul className="flex flex-col  h-full">
-        <div>
-          {navLinks.map((item) => (
-            <li key={item.name}>
-              <Link
-                className="flex gap-4 hover:bg-primary-900 px-5 py-5"
-                href={item.href}
-              >
-                {item.icon}
-                {item.name}
-              </Link>
-            </li>
-          ))}
-        </div>
-        <div>
-          <li className="mt-auto">
-            <SignoutButton />
+    <nav className="border-r border-primary-900 flex flex-col justify-between">
+      <ul>
+        {navLinks.map((item) => (
+          <li key={item.name}>
+            <Link
+              className="flex gap-4 hover:bg-primary-900 px-5 py-5"
+              href={item.href}
+            >
+              {item.icon}
+              {item.name}
+            </Link>
           </li>
-        </div>
+        ))}
       </ul>
+
+      <SignoutButton />
     </nav>
   );
 }

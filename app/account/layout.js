@@ -2,9 +2,9 @@ import SideNavigation from "@/app/_components/SideNavigation";
 
 function layout({ children }) {
   return (
-    <div className="grid grid-cols-[16rem_1fr]">
+    <div className="grid grid-cols-5 h-full">
       <SideNavigation />
-      <div>{children}</div>
+      <div className="col-span-4 ">{children}</div>
     </div>
   );
 }
