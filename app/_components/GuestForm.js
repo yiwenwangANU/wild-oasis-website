@@ -18,26 +18,49 @@ function GuestForm() {
       <div>
         <div className="py-3">Full Name</div>
         <input
-          className="w-full text-primary-800 bg-primary-200 px-4 py-3"
+          className={`w-full text-primary-800  px-4 py-3 ${
+            errors["Full name"]
+              ? "bg-accent-100 border-l-8 border-accent-400"
+              : "bg-primary-200"
+          }`}
+          placeholder={errors["Full name"] && "This field is required."}
           type="text"
           {...register("Full name", { required: true, maxLength: 80 })}
         />
       </div>
-      <div>
+      <div className="relative">
         <div className="py-3">Email address</div>
         <input
-          className="w-full text-primary-800 bg-primary-200 px-4 py-3"
+          className={`block w-full text-primary-800  px-4 py-3 ${
+            errors["Email"]
+              ? "bg-accent-100 border-l-8 border-accent-400"
+              : "bg-primary-200"
+          }`}
+          placeholder={
+            errors["Email"]?.type === "required" && "This field is required."
+          }
           type="text"
           {...register("Email", { required: true, pattern: /^\S+@\S+$/i })}
         />
+        {errors["Email"]?.type === "pattern" && (
+          <label className="absolute z-10 top-3 right-2.5 transition duration-300 text-red-400">
+            Invalid Email address.
+          </label>
+        )}
       </div>
       <div>
         <div className="py-3">Where are you from?</div>
         <select
-          className="w-full text-primary-800 bg-primary-200 px-4 py-3"
-          placeholder="Email"
+          className={`w-full text-primary-800  px-4 py-3 ${
+            errors["Country"]
+              ? "bg-accent-100 border-l-8 border-accent-400"
+              : "bg-primary-200"
+          }`}
           {...register("Country", { required: true })}
         >
+          <option value="" disabled selected>
+            Select your Country
+          </option>
           <option value="Country1">Country1</option>
           <option value="Country2">Country2</option>
           <option value="Country3">Country3</option>
@@ -46,8 +69,13 @@ function GuestForm() {
       <div>
         <div className="py-3">National ID number</div>
         <input
-          className="w-full text-primary-800 bg-primary-200 px-4 py-3"
-          {...register("Developer", { required: true })}
+          className={`w-full text-primary-800  px-4 py-3 ${
+            errors["National ID"]
+              ? "bg-accent-100 border-l-8 border-accent-400"
+              : "bg-primary-200"
+          }`}
+          placeholder={errors["National ID"] && "This field is required."}
+          {...register("National ID", { required: true })}
           type="text"
         />
       </div>
