@@ -3,7 +3,7 @@ import { ArrowLeftStartOnRectangleIcon } from "@heroicons/react/24/solid";
 function SignoutButton() {
   return (
     <button className="flex gap-4 hover:bg-primary-900 px-5 py-5 w-full">
-      <ArrowLeftStartOnRectangleIcon className="w-5" />
+      <ArrowLeftStartOnRectangleIcon className="w-5 text-primary-700" />
       Sign out
     </button>
   );
