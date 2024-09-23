@@ -40,7 +40,7 @@ function SideNavigation() {
         ))}
       </ul>
 
-      <SignoutButton />
+      <SignoutButton className="flex-1 align-bottom" />
     </nav>
   );
 }

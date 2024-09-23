@@ -1,5 +1,5 @@
 import Link from "next/link";
-
+export const metadata = { title: "Reservations" };
 function page() {
   return (
     <div className="px-12 py-4 ">

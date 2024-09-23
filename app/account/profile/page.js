@@ -1,5 +1,5 @@
 import GuestForm from "@/app/_components/GuestForm";
-
+export const metadata = { title: "Update Profile" };
 function page() {
   return (
     <div className="px-12 py-4 ">
