@@ -1,11 +1,13 @@
+import CabinCard from "../_components/CabinCard";
+import { getCabins } from "../_libs/data-service";
+
 export const metadata = {
   title: "Cabins",
 };
 
 async function page() {
-  const res = await fetch("https://jsonplaceholder.typicode.com/users");
-  const data = await res.json();
-  console.log(data);
+  const cabins = await getCabins();
+  console.log(cabins);
   return (
     <>
       <h1 className="text-4xl text-accent-400 py-4">Our Luxury Cabins</h1>
@@ -17,6 +19,11 @@ async function page() {
         home away from home. The perfect spot for a peaceful, calm vacation.
         Welcome to paradise.
       </p>
+      <div className="grid grid-cols-2 gap-12">
+        {cabins.map((cabin) => (
+          <CabinCard cabin={cabin} key={cabin.id} />
+        ))}
+      </div>
     </>
   );
 }
