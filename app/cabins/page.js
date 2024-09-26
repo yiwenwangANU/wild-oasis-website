@@ -26,7 +26,6 @@ async function page() {
           <CabinCard cabin={cabin} key={cabin.id} />
         ))}
       </div>
-      <Loading />
     </>
   );
 }

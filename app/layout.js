@@ -13,10 +13,10 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${josefin.className} antialiased bg-primary-950 text-primary-100 flex flex-col h-dvh`}
+        className={`${josefin.className} antialiased bg-primary-950 text-primary-100 flex flex-col h-dvh relative`}
       >
         <Header />
-        <main className="max-w-7xl mx-auto flex-1 py-12 w-full">
+        <main className="max-w-7xl mx-auto flex-1 py-12 w-full ">
           {children}
         </main>
       </body>
