@@ -6,7 +6,7 @@ function CabinCard({ cabin }) {
   return (
     <div className="border border-primary-800 flex">
       <div className="relative h-52 basis-1/3">
-        <Image src={image} alt="cabin image" fill />
+        <Image src={image} alt={`cabin image ${name}`} fill />
       </div>
       <div className="flex-1 flex flex-col">
         <div className="basis-1/4 text-2xl px-6 py-5 text-accent-500">

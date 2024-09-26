@@ -1,6 +1,7 @@
-import CabinCard from "../_components/CabinCard";
-import CabinFilter from "../_components/CabinFilter";
-import { getCabins } from "../_libs/data-service";
+import CabinCard from "@/app/_components/CabinCard";
+import CabinFilter from "@/app/_components/CabinFilter";
+import { getCabins } from "@/app/_libs/data-service";
+import Loading from "../loading";
 
 export const metadata = {
   title: "Cabins",
@@ -8,7 +9,6 @@ export const metadata = {
 
 async function page() {
   const cabins = await getCabins();
-  console.log(cabins);
   return (
     <>
       <h1 className="text-4xl text-accent-400 py-2">Our Luxury Cabins</h1>
@@ -26,6 +26,7 @@ async function page() {
           <CabinCard cabin={cabin} key={cabin.id} />
         ))}
       </div>
+      <Loading />
     </>
   );
 }
