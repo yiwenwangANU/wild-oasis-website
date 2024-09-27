@@ -2,6 +2,7 @@ import CabinCard from "@/app/_components/CabinCard";
 import CabinFilter from "@/app/_components/CabinFilter";
 import { getCabins } from "@/app/_libs/data-service";
 import Loading from "../loading";
+import Spinner from "../_components/Spinner";
 
 export const metadata = {
   title: "Cabins",
@@ -26,6 +27,7 @@ async function page() {
           <CabinCard cabin={cabin} key={cabin.id} />
         ))}
       </div>
+      <Spinner />
     </>
   );
 }
