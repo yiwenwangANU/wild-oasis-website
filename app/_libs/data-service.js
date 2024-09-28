@@ -50,6 +50,17 @@ export const getCabins = async function () {
   return data;
 };
 
+export const getCabinIds = async function () {
+  const { data: cabinIds, error } = await supabase.from("cabins").select("id");
+
+  if (error) {
+    console.error(error);
+    throw new Error("CabinIds could not be loaded");
+  }
+
+  return cabinIds;
+};
+
 // Guests are uniquely identified by their email address
 export async function getGuest(email) {
   const { data, error } = await supabase
