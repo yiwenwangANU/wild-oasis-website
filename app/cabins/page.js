@@ -7,7 +7,7 @@ export const metadata = {
   title: "Cabins",
 };
 
-async function page() {
+function page() {
   return (
     <>
       <h1 className="text-4xl text-accent-400 py-2">Our Luxury Cabins</h1>
