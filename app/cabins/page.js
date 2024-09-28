@@ -1,15 +1,11 @@
-import CabinCard from "@/app/_components/CabinCard";
 import CabinFilter from "@/app/_components/CabinFilter";
-import { getCabins } from "@/app/_libs/data-service";
-import Loading from "../loading";
-import Spinner from "../_components/Spinner";
+import CabinList from "@/app/_components/CabinList";
 
 export const metadata = {
   title: "Cabins",
 };
 
 async function page() {
-  const cabins = await getCabins();
   return (
     <>
       <h1 className="text-4xl text-accent-400 py-2">Our Luxury Cabins</h1>
@@ -22,11 +18,7 @@ async function page() {
         Welcome to paradise.
       </p>
       <CabinFilter />
-      <div className="py-2 grid grid-cols-2 gap-12">
-        {cabins.map((cabin) => (
-          <CabinCard cabin={cabin} key={cabin.id} />
-        ))}
-      </div>
+      <CabinList />
     </>
   );
 }
