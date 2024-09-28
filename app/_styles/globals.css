@@ -3,20 +3,11 @@
 @tailwind utilities;
 
 @layer components {
-  /* .spinner {
+  .loader {
     margin: 3.2rem auto 1.6rem;
     width: 60px;
     aspect-ratio: 1;
-    border-radius: 50%;
-    border: 8px solid theme("colors.primary.900");
-    border-right-color: theme("colors.primary.200");
-    animation: rotate 1s infinite linear;
-  } */
-
-  .loader {
-    width: 45px;
-    aspect-ratio: 1;
-    --c: no-repeat linear-gradient(#b92e2e 0 0);
+    --c: no-repeat linear-gradient(theme("colors.accent.600") 0 0);
     background: var(--c) 0% 50%, var(--c) 25% 50%, var(--c) 50% 50%,
       var(--c) 75% 50%, var(--c) 100% 50%;
     background-size: 20% 100%;
@@ -50,6 +41,15 @@
     100% {
       background-size: 10% 20%, 10% 40%, 10% 60%, 10% 80%, 10% 100%;
     }
+  }
+  .spinner {
+    margin: 3.2rem auto 1.6rem;
+    width: 60px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 8px solid theme("colors.primary.900");
+    border-right-color: theme("colors.primary.200");
+    animation: rotate 1s infinite linear;
   }
 
   .spinner-mini {
