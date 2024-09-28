@@ -2,11 +2,15 @@ import Image from "next/image";
 import about_1 from "@/public/about-1.jpg";
 import about_2 from "@/public/about-2.jpg";
 import Link from "next/link";
+import { getCabins } from "@/app/_libs/data-service";
 export const metadata = {
   title: "About",
 };
 
-function page() {
+export const revalidate = 86400;
+
+async function page() {
+  const cabins = await getCabins();
   return (
     <div className="grid grid-cols-6 gap-x-20 gap-y-32">
       <div className="col-span-4">
@@ -20,10 +24,11 @@ function page() {
           cabins. It&apos;s about the experience of reconnecting with nature and
           enjoying simple pleasures with family. <br />
           <br />
-          Our 8 luxury cabins provide a cozy base, but the real freedom and
-          peace you&apos;ll find in the surrounding mountains. Wander through
-          lush forests, breathe in the fresh air, and watch the stars twinkle
-          above from the warmth of a campfire or your hot tub. <br />
+          Our {cabins.length} luxury cabins provide a cozy base, but the real
+          freedom and peace you&apos;ll find in the surrounding mountains.
+          Wander through lush forests, breathe in the fresh air, and watch the
+          stars twinkle above from the warmth of a campfire or your hot tub.{" "}
+          <br />
           <br />
           This is where memorable moments are made, surrounded by nature&apos;s
           splendor. It&apos;s a place to slow down, relax, and feel the joy of
