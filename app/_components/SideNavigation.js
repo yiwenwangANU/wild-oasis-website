@@ -1,3 +1,4 @@
+"use client";
 import {
   CalendarDaysIcon,
   HomeIcon,
@@ -5,6 +6,7 @@ import {
 } from "@heroicons/react/24/solid";
 import Link from "next/link";
 import SignoutButton from "@/app/_components/SignoutButton";
+import { usePathname } from "next/navigation";
 const navLinks = [
   {
     name: "Home",
@@ -24,13 +26,16 @@ const navLinks = [
 ];
 
 function SideNavigation() {
+  const pathname = usePathname();
   return (
     <nav className="border-r border-primary-900 flex flex-col justify-between">
       <ul>
         {navLinks.map((item) => (
           <li key={item.name}>
             <Link
-              className="flex gap-4 hover:bg-primary-900 px-5 py-5"
+              className={`flex gap-4 hover:bg-primary-900 px-5 py-5 ${
+                pathname === item.href && "bg-primary-900"
+              }`}
               href={item.href}
             >
               {item.icon}
