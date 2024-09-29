@@ -2,6 +2,7 @@ import Image from "next/image";
 import cabin01 from "@/public/cabin-001.jpg";
 import { EyeSlashIcon, MapPinIcon, UsersIcon } from "@heroicons/react/24/solid";
 import { getCabin } from "../_libs/data-service";
+import ShowMore from "./ShowMore";
 
 async function CabinDetails({ cabinId }) {
   const { name, maxCapacity, description, image } = await getCabin(cabinId);
@@ -19,7 +20,9 @@ async function CabinDetails({ cabinId }) {
         <div className="text-6xl font-bold -translate-x-60 bg-primary-950 px-2 pt-4 pb-4 my-2">
           Cabin {name}
         </div>
-        <div className="text-primary-300 p-4">{description}</div>
+        <div className="text-primary-300 p-4">
+          <ShowMore>{description}</ShowMore>
+        </div>
         <ul className="flex flex-col gap-4 p-5 ">
           <li className="flex gap-3 items-center">
             <UsersIcon className="w-4 h-4 text-primary-600" />
