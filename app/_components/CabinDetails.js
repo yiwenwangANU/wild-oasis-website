@@ -1,5 +1,4 @@
 import Image from "next/image";
-import cabin01 from "@/public/cabin-001.jpg";
 import { EyeSlashIcon, MapPinIcon, UsersIcon } from "@heroicons/react/24/solid";
 import { getCabin } from "../_libs/data-service";
 import ShowMore from "./ShowMore";

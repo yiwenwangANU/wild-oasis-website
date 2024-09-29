@@ -9,7 +9,7 @@ export const metadata = {
   title: "Cabins",
 };
 
-function page() {
+function page({ searchParams }) {
   return (
     <>
       <h1 className="text-4xl text-accent-400 py-2">Our Luxury Cabins</h1>
@@ -23,7 +23,7 @@ function page() {
       </p>
       <Suspense fallback={<Spinner />}>
         <CabinFilter />
-        <CabinList />
+        <CabinList filter={searchParams} />
       </Suspense>
     </>
   );
