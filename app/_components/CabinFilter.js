@@ -12,18 +12,20 @@ function CabinFilter() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
+  const activeFilter = searchParams.get("capacity");
 
   const handleClick = (filter) => {
     const params = new URLSearchParams(searchParams);
     params.set("capacity", filter);
     router.replace(`${pathname}?${params.toString()}`, { scroll: false });
-    console.log(searchParams);
   };
   return (
-    <div className="ml-auto w-fit flex gap-2 items-center my-4 border-primary-800 border">
+    <div className="ml-auto w-fit flex items-center my-4 border-primary-800 border">
       {filterValue.map((item) => (
         <button
-          className="px-5 py-2 hover:bg-primary-700 "
+          className={`px-5 py-2 hover:bg-primary-700  hover:text-primary-50 ${
+            item.filter === activeFilter ? "bg-primary-700 text-primary-50" : ""
+          }`}
           key={item.name}
           onClick={() => handleClick(item.filter)}
         >

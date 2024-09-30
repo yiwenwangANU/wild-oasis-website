@@ -21,7 +21,7 @@ function page({ searchParams }) {
         home away from home. The perfect spot for a peaceful, calm vacation.
         Welcome to paradise.
       </p>
-      <Suspense fallback={<Spinner />}>
+      <Suspense fallback={<Spinner />} key={searchParams}>
         <CabinFilter />
         <CabinList filter={searchParams} />
       </Suspense>
