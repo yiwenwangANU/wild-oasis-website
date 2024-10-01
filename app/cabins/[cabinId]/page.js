@@ -1,4 +1,5 @@
 import CabinDetails from "@/app/_components/CabinDetails";
+import DateSelector from "@/app/_components/DateSelector";
 import { getCabin, getCabins } from "@/app/_libs/data-service";
 
 export async function generateMetadata({ params }) {
@@ -15,7 +16,15 @@ export async function generateStaticParams() {
 }
 
 function page({ params }) {
-  return <CabinDetails cabinId={params.cabinId} />;
+  return (
+    <>
+      <CabinDetails cabinId={params.cabinId} />
+      <div className="text-center text-accent-400 text-5xl pt-16">
+        Reserve today. Pay on arrival.
+      </div>
+      <DateSelector />
+    </>
+  );
 }
 
 export default page;
