@@ -1,4 +1,5 @@
 import GuestForm from "@/app/_components/GuestForm";
+import SelectCountry from "@/app/_components/SelectCountry";
 export const metadata = { title: "Update Profile" };
 function page() {
   return (
@@ -10,7 +11,9 @@ function page() {
         Providing the following information will make your check-in process
         faster and smoother. See you soon!
       </p>
-      <GuestForm />
+      <GuestForm>
+        <SelectCountry />
+      </GuestForm>
     </div>
   );
 }

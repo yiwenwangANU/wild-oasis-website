@@ -1,21 +1,13 @@
 "use client";
 import { useForm } from "react-hook-form";
 
-import { useState } from "react";
-import { CountryDropdown } from "react-country-region-selector";
-
-function GuestForm() {
-  const [country, setCountry] = useState("");
-  const [validate, setValidate] = useState(false);
+function GuestForm({ children }) {
   const {
     register,
-    setValue,
-    trigger,
     handleSubmit,
     formState: { errors },
   } = useForm();
   const onSubmit = (data) => console.log(data);
-  console.log(errors);
 
   return (
     <form
@@ -59,19 +51,22 @@ function GuestForm() {
       </div>
       <div>
         <div className="py-3">Where are you from?</div>
-
-        <CountryDropdown
+        <select
           className={`w-full text-primary-800  px-4 py-3 ${
-            country === "" && validate === true
+            errors["Country"]
               ? "bg-accent-100 border-l-8 border-accent-400"
               : "bg-primary-200"
           }`}
-          value={country}
-          onChange={(val) => {
-            setCountry(val);
-            setValue("Country", val, { shouldValidate: true });
-          }}
-        />
+          defaultValue=""
+          {...register("Country", {
+            validate: (value) => value !== "",
+          })}
+        >
+          <option value="" disabled>
+            Select your country
+          </option>
+          {children}
+        </select>
       </div>
       <div>
         <div className="py-3">National ID number</div>
@@ -90,9 +85,6 @@ function GuestForm() {
         <button
           type="submit"
           className=" text-primary-800 text-center text-lg font-semibold bg-accent-500 px-6 py-3 mt-5 hover:bg-accent-600 transition-colors "
-          onClick={() => {
-            setValidate(true);
-          }}
         >
           Update profile
         </button>
