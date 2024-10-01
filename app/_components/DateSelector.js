@@ -8,12 +8,18 @@ function DateSelector() {
 
   return (
     <DayPicker
-      mode="double"
+      mode="range"
+      numberOfMonths={2}
       selected={selected}
       onSelect={setSelected}
-      footer={
-        selected ? `Selected: ${selected.toLocaleDateString()}` : "Pick a day."
-      }
+      classNames={{
+        today: `text-accent-0`,
+        chevron: `fill-accent-500`,
+        selected: `border-none`,
+        range_start: `bg-accent-500 rounded-l-3xl`,
+        range_middle: `bg-accent-500 `,
+        range_end: `bg-accent-500 rounded-r-3xl`,
+      }}
     />
   );
 }
