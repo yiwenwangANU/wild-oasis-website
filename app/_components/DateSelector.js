@@ -3,14 +3,14 @@
 import { useState } from "react";
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/style.css";
-function DateSelector({ max }) {
+function DateSelector({ maxBookingLength, regularPrice, discount }) {
   const [selected, setSelected] = useState();
 
   return (
     <div className="flex flex-col">
       <DayPicker
         mode="range"
-        max={max}
+        max={maxBookingLength}
         numberOfMonths={2}
         selected={selected}
         onSelect={setSelected}
@@ -27,8 +27,18 @@ function DateSelector({ max }) {
         }}
       />
       <div className="bg-accent-500 flex-1 px-8 flex items-center text-primary-800">
-        <span className="text-2xl">$400 </span>
-        <span>&nbsp;/night</span>
+        <span className="text-2xl">${regularPrice - discount} </span>
+        <span>
+          &nbsp;
+          {discount ? (
+            <span className="line-through text-primary-700 font-semibold">
+              ${regularPrice}&nbsp;
+            </span>
+          ) : (
+            ""
+          )}
+          /night
+        </span>
       </div>
     </div>
   );

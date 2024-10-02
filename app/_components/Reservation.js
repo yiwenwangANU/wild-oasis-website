@@ -3,14 +3,16 @@ import ReservationForm from "@/app/_components/ReservationForm";
 import { getCabin, getSettings } from "../_libs/data-service";
 
 async function Reservation({ cabinId }) {
-  const [
-    { maxCapacity, regularPrice, discount },
-    { minBookingLength, maxBookingLength },
-  ] = await Promise.all([getCabin(cabinId), getSettings()]);
-  console.log(maxBookingLength);
+  const [{ maxCapacity, regularPrice, discount }, { maxBookingLength }] =
+    await Promise.all([getCabin(cabinId), getSettings()]);
+
   return (
     <>
-      <DateSelector min={minBookingLength} max={maxBookingLength} />
+      <DateSelector
+        maxBookingLength={maxBookingLength}
+        regularPrice={regularPrice}
+        discount={discount}
+      />
       <ReservationForm maxCapacity={maxCapacity} />
     </>
   );
