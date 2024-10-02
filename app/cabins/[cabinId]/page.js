@@ -23,10 +23,10 @@ function page({ params }) {
       <div className="text-center text-accent-400 text-5xl pt-16">
         Reserve today. Pay on arrival.
       </div>
-      <div className="flex border border-primary-800 mx-auto max-w-6xl my-10">
+      <div className="flex border border-primary-800 mx-auto max-w-6xl mt-10">
         <div className="flex flex-col relative">
           <DateSelector />
-          <div className="bg-accent-500 h-16 px-8 flex items-center text-primary-800">
+          <div className="bg-accent-500 flex-1 px-8 flex items-center text-primary-800">
             <span className="text-2xl">$400 </span>
             <span>&nbsp;/night</span>
           </div>
@@ -36,7 +36,7 @@ function page({ params }) {
             <div>Loggedin in as</div>
             <div>Username</div>
           </div>
-          <form className="px-12 py-10">
+          <form className="px-12 py-7">
             <div className="flex flex-col gap-4">
               <div>How many guests?</div>
               <select
@@ -54,9 +54,9 @@ function page({ params }) {
                 className="h-20 bg-primary-200 px-4 rounded-sm py-4 text-primary-900"
                 placeholder="Any pets, allergies, special requirements, etc.?"
               ></textarea>
-              <div className="flex justify-end text-primary-200">
-                <p>Start by selecting dates</p>
-              </div>
+            </div>
+            <div className="flex-1 flex justify-end text-primary-200  pt-9">
+              <p>Start by selecting dates</p>
             </div>
           </form>
         </div>
