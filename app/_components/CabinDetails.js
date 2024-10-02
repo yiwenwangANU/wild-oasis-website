@@ -7,7 +7,7 @@ async function CabinDetails({ cabinId }) {
   const { name, maxCapacity, description, image } = await getCabin(cabinId);
 
   return (
-    <div className="border-primary-700 border mx-auto max-w-6xl flex gap-6 py-10">
+    <div className="border-primary-800 border mx-auto max-w-6xl flex gap-6 py-10">
       <Image
         src={image}
         alt={`cabin image`}

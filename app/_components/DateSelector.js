@@ -12,8 +12,11 @@ function DateSelector() {
       numberOfMonths={2}
       selected={selected}
       onSelect={setSelected}
+      className="scale-75 -mx-10"
       classNames={{
         today: `text-accent-0`,
+        week: `text-xl`,
+        weekdays: `text-xl font-semibold uppercase`,
         chevron: `fill-accent-500`,
         selected: `border-none`,
         range_start: `bg-accent-500 rounded-l-3xl`,
