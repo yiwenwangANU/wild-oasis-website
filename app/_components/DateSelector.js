@@ -3,8 +3,20 @@
 import { useState } from "react";
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/style.css";
-function DateSelector({ maxBookingLength, regularPrice, discount }) {
+function DateSelector({
+  maxBookingLength,
+  regularPrice,
+  discount,
+  bookedDates,
+}) {
   const [selected, setSelected] = useState();
+
+  const dates = [
+    new Date(2024, 10, 15), // October 15, 2023
+    new Date(2024, 10, 18), // October 18, 2023
+    new Date(2024, 10, 22), // October 22, 2023
+    // Add more booked dates as needed
+  ];
 
   return (
     <div className="flex flex-col">
@@ -12,6 +24,7 @@ function DateSelector({ maxBookingLength, regularPrice, discount }) {
         mode="range"
         max={maxBookingLength}
         numberOfMonths={2}
+        disabled={bookedDates}
         selected={selected}
         onSelect={setSelected}
         className="scale-75 -mx-10"
