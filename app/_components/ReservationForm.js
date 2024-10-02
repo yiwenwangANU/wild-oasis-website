@@ -1,4 +1,8 @@
-function ReservationForm() {
+function ReservationForm({ maxCapacity }) {
+  const guestList = Array.from({ length: maxCapacity }, (_, i) => {
+    return { name: `${i + 1} guest${i === 0 ? "" : "s"}`, value: i + 1 };
+  });
+
   return (
     <div className="flex flex-col bg-primary-900 flex-1">
       <div className="bg-primary-800 flex justify-between h-10 text-primary-300 px-12 py-3 items-center">
@@ -15,8 +19,11 @@ function ReservationForm() {
             <option value="" disabled>
               Select number of guest...
             </option>
-            <option>option1</option>
-            <option>option2</option>
+            {guestList.map((g) => (
+              <option value={g.value} key={g.value}>
+                {g.name}
+              </option>
+            ))}
           </select>
           <div>Anything we should know about your stay?</div>
           <textarea

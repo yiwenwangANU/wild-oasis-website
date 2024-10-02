@@ -1,8 +1,8 @@
 import CabinDetails from "@/app/_components/CabinDetails";
-import DateSelector from "@/app/_components/DateSelector";
-import ReservationForm from "@/app/_components/ReservationForm";
+import Reservation from "@/app/_components/Reservation";
+import Spinner from "@/app/_components/Spinner";
 import { getCabin, getCabins } from "@/app/_libs/data-service";
-import Link from "next/link";
+import { Suspense } from "react";
 
 export async function generateMetadata({ params }) {
   const { name } = await getCabin(params.cabinId);
@@ -25,8 +25,9 @@ function page({ params }) {
         Reserve today. Pay on arrival.
       </div>
       <div className="flex border border-primary-800 mx-auto max-w-6xl mt-10">
-        <DateSelector />
-        <ReservationForm />
+        <Suspense fallback={<Spinner />}>
+          <Reservation cabinId={params.cabinId} />
+        </Suspense>
       </div>
     </>
   );

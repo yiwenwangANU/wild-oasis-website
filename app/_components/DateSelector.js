@@ -3,13 +3,14 @@
 import { useState } from "react";
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/style.css";
-function DateSelector() {
+function DateSelector({ max }) {
   const [selected, setSelected] = useState();
 
   return (
     <div className="flex flex-col">
       <DayPicker
         mode="range"
+        max={max}
         numberOfMonths={2}
         selected={selected}
         onSelect={setSelected}
