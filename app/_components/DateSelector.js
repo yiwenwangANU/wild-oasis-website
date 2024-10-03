@@ -1,23 +1,16 @@
 "use client";
 
-import { useState } from "react";
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/style.css";
+import { useReservation } from "@/app/_components/ReservationContext";
 function DateSelector({
   maxBookingLength,
   regularPrice,
   discount,
   bookedDates,
 }) {
-  const [selected, setSelected] = useState();
-
-  const dates = [
-    new Date(2024, 10, 15), // October 15, 2023
-    new Date(2024, 10, 18), // October 18, 2023
-    new Date(2024, 10, 22), // October 22, 2023
-    // Add more booked dates as needed
-  ];
-
+  const { selected, setSelected, clearSelected } = useReservation();
+  console.log(selected);
   return (
     <div className="flex flex-col">
       <DayPicker
@@ -39,19 +32,27 @@ function DateSelector({
           range_end: `bg-accent-500 rounded-r-3xl`,
         }}
       />
-      <div className="bg-accent-500 flex-1 px-8 flex items-center text-primary-800">
-        <span className="text-2xl">${regularPrice - discount} </span>
-        <span>
-          &nbsp;
-          {discount ? (
-            <span className="line-through text-primary-700 font-semibold">
-              ${regularPrice}&nbsp;
-            </span>
-          ) : (
-            ""
-          )}
-          /night
-        </span>
+      <div className="bg-accent-500 flex-1 px-8 flex items-center text-primary-800 justify-between">
+        <div>
+          <span className="text-2xl">${regularPrice - discount} </span>
+          <span>
+            &nbsp;
+            {discount ? (
+              <span className="line-through text-primary-700 font-semibold">
+                ${regularPrice}&nbsp;
+              </span>
+            ) : (
+              ""
+            )}
+            /night
+          </span>
+        </div>
+        <button
+          className="border border-primary-700 px-3 py-1"
+          onClick={clearSelected}
+        >
+          Clear
+        </button>
       </div>
     </div>
   );

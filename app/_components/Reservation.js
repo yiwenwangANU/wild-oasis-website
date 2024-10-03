@@ -16,7 +16,7 @@ async function Reservation({ cabinId }) {
     getSettings(),
     getBookedDatesByCabinId(cabinId),
   ]);
-  console.log(bookedDates);
+
   return (
     <>
       <DateSelector
