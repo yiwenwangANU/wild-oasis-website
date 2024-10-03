@@ -8,7 +8,7 @@ import {
 
 async function Reservation({ cabinId }) {
   const [
-    { name, maxCapacity, regularPrice, discount },
+    { name, maxCapacity, regularPrice, discount, image },
     { maxBookingLength },
     bookedDates,
   ] = await Promise.all([
@@ -21,10 +21,12 @@ async function Reservation({ cabinId }) {
     <>
       <DateSelector
         name={name}
+        cabinId={cabinId}
         maxBookingLength={maxBookingLength}
         regularPrice={regularPrice}
         discount={discount}
         bookedDates={bookedDates}
+        image={image}
       />
       <ReservationForm maxCapacity={maxCapacity} />
     </>

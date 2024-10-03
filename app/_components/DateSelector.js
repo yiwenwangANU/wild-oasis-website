@@ -5,20 +5,22 @@ import "react-day-picker/style.css";
 import { useReservation } from "@/app/_components/ReservationContext";
 import { differenceInDays } from "date-fns";
 function DateSelector({
+  cabinId,
   name,
   maxBookingLength,
   regularPrice,
   discount,
   bookedDates,
+  image,
 }) {
   const {
-    ReservedDate,
+    setReservedCabinId,
+    reservedDate,
     setReservedDate,
     clearReservation,
-    reservedCabin,
     setReservedCabin,
-    reservationPrice,
     setReservationPrice,
+    setReservedCabinImage,
   } = useReservation();
   const handleSelect = (range) => {
     const totalDays = differenceInDays(range.to, range.from) + 1;
@@ -26,6 +28,8 @@ function DateSelector({
     setReservedDate(range);
     setReservedCabin(name);
     setReservationPrice(totalPrice);
+    setReservedCabinId(cabinId);
+    setReservedCabinImage(image);
   };
   return (
     <div className="flex flex-col">
@@ -34,7 +38,7 @@ function DateSelector({
         max={maxBookingLength}
         numberOfMonths={2}
         disabled={bookedDates}
-        selected={ReservedDate}
+        selected={reservedDate}
         onSelect={handleSelect}
         className="scale-75 -mx-10"
         classNames={{
@@ -63,7 +67,7 @@ function DateSelector({
             /night
           </span>
         </div>
-        {ReservedDate?.from && (
+        {reservedDate?.from && (
           <button
             className="border border-primary-700 px-3 py-1"
             onClick={clearReservation}

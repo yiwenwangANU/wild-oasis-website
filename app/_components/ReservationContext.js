@@ -6,24 +6,32 @@ const ReservationContext = createContext();
 
 function ReservationProvider({ children }) {
   const initialState = { from: undefined, to: undefined };
-  const [ReservedDate, setReservedDate] = useState(initialState);
+  const [reservedCabinId, setReservedCabinId] = useState();
+  const [reservedDate, setReservedDate] = useState(initialState);
   const [reservedCabin, setReservedCabin] = useState();
   const [reservationPrice, setReservationPrice] = useState();
+  const [reservedCabinImage, setReservedCabinImage] = useState();
   const clearReservation = () => {
     setReservedDate(initialState);
+    setReservedCabinId("");
     setReservedCabin("");
     setReservationPrice("");
+    setReservedCabinImage("");
   };
   return (
     <ReservationContext.Provider
       value={{
-        ReservedDate,
+        reservedCabinId,
+        setReservedCabinId,
+        reservedDate,
         setReservedDate,
         clearReservation,
         reservedCabin,
         setReservedCabin,
         reservationPrice,
         setReservationPrice,
+        reservedCabinImage,
+        setReservedCabinImage,
       }}
     >
       {children}
