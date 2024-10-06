@@ -5,7 +5,7 @@ import "react-day-picker/style.css";
 import { useReservation } from "@/app/_components/ReservationContext";
 import { differenceInDays } from "date-fns";
 import { XMarkIcon } from "@heroicons/react/24/solid";
-import { useState } from "react";
+import { usePathname } from "next/navigation";
 function DateSelector({
   cabinId,
   name,
@@ -16,29 +16,31 @@ function DateSelector({
   image,
 }) {
   const {
+    reservedCabinId,
     setReservedCabinId,
     reservedDate,
+    reservationPrice,
+    totalDays,
     setReservedDate,
     clearReservation,
     setReservedCabin,
     setReservationPrice,
     setReservedCabinImage,
+    setTotalDays,
   } = useReservation();
 
-  const [totalDays, setTotalDays] = useState();
-  const [totalPrice, setTotalPrice] = useState();
   const handleSelect = (range) => {
     setTotalDays(differenceInDays(range.to, range.from) + 1);
-    setTotalPrice(
-      (differenceInDays(range.to, range.from) + 1) * (regularPrice - discount)
-    );
     setReservedDate(range);
     setReservedCabin(name);
-    setReservationPrice(totalPrice);
+    setReservationPrice(
+      (differenceInDays(range.to, range.from) + 1) * (regularPrice - discount)
+    );
     setReservedCabinId(cabinId);
     setReservedCabinImage(image);
   };
-  console.log("total days: " + totalDays);
+  const pathname = usePathname();
+
   return (
     <div className="flex flex-col">
       <DayPicker
@@ -46,7 +48,7 @@ function DateSelector({
         max={maxBookingLength}
         numberOfMonths={2}
         disabled={bookedDates}
-        selected={reservedDate}
+        selected={pathname.includes(reservedCabinId) && reservedDate}
         onSelect={handleSelect}
         className="scale-75 -mx-10"
         classNames={{
@@ -76,16 +78,16 @@ function DateSelector({
               /night
             </span>
           </div>
-          {reservedDate?.from && (
+          {pathname.includes(reservedCabinId) && reservedDate?.from && (
             <div className="flex bg-accent-600 px-3 py-2 font-bold text-xl">
               <XMarkIcon className="w-5 " />
               {totalDays}
             </div>
           )}
         </div>
-        {reservedDate?.from && (
+        {pathname.includes(reservedCabinId) && reservedDate?.from && (
           <div className="flex gap-5 items-center">
-            <div className="font-bold text-lg">TOTAL ${totalPrice}</div>
+            <div className="font-bold text-lg">TOTAL ${reservationPrice}</div>
             <button
               className="border border-primary-700 px-3 py-1"
               onClick={clearReservation}

@@ -11,12 +11,14 @@ function ReservationProvider({ children }) {
   const [reservedCabin, setReservedCabin] = useState();
   const [reservationPrice, setReservationPrice] = useState();
   const [reservedCabinImage, setReservedCabinImage] = useState();
+  const [totalDays, setTotalDays] = useState();
   const clearReservation = () => {
     setReservedDate(initialState);
     setReservedCabinId("");
     setReservedCabin("");
     setReservationPrice("");
     setReservedCabinImage("");
+    setTotalDays("");
   };
   return (
     <ReservationContext.Provider
@@ -32,6 +34,8 @@ function ReservationProvider({ children }) {
         setReservationPrice,
         reservedCabinImage,
         setReservedCabinImage,
+        totalDays,
+        setTotalDays,
       }}
     >
       {children}
