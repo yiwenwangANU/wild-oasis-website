@@ -4,6 +4,8 @@ import { DayPicker } from "react-day-picker";
 import "react-day-picker/style.css";
 import { useReservation } from "@/app/_components/ReservationContext";
 import { differenceInDays } from "date-fns";
+import { XMarkIcon } from "@heroicons/react/24/solid";
+import { useState } from "react";
 function DateSelector({
   cabinId,
   name,
@@ -22,15 +24,21 @@ function DateSelector({
     setReservationPrice,
     setReservedCabinImage,
   } = useReservation();
+
+  const [totalDays, setTotalDays] = useState();
+  const [totalPrice, setTotalPrice] = useState();
   const handleSelect = (range) => {
-    const totalDays = differenceInDays(range.to, range.from) + 1;
-    const totalPrice = totalDays * (regularPrice - discount);
+    setTotalDays(differenceInDays(range.to, range.from) + 1);
+    setTotalPrice(
+      (differenceInDays(range.to, range.from) + 1) * (regularPrice - discount)
+    );
     setReservedDate(range);
     setReservedCabin(name);
     setReservationPrice(totalPrice);
     setReservedCabinId(cabinId);
     setReservedCabinImage(image);
   };
+  console.log("total days: " + totalDays);
   return (
     <div className="flex flex-col">
       <DayPicker
@@ -53,27 +61,38 @@ function DateSelector({
         }}
       />
       <div className="bg-accent-500 flex-1 px-8 flex items-center text-primary-800 justify-between">
-        <div>
-          <span className="text-2xl">${regularPrice - discount} </span>
-          <span>
-            &nbsp;
-            {discount ? (
-              <span className="line-through text-primary-700 font-semibold">
-                ${regularPrice}&nbsp;
-              </span>
-            ) : (
-              ""
-            )}
-            /night
-          </span>
+        <div className="flex gap-5 items-center">
+          <div>
+            <span className="text-2xl">${regularPrice - discount} </span>
+            <span>
+              &nbsp;
+              {discount ? (
+                <span className="line-through text-primary-700 font-semibold">
+                  ${regularPrice}&nbsp;
+                </span>
+              ) : (
+                ""
+              )}
+              /night
+            </span>
+          </div>
+          {reservedDate?.from && (
+            <div className="flex bg-accent-600 px-3 py-2 font-bold text-xl">
+              <XMarkIcon className="w-5 " />
+              {totalDays}
+            </div>
+          )}
         </div>
         {reservedDate?.from && (
-          <button
-            className="border border-primary-700 px-3 py-1"
-            onClick={clearReservation}
-          >
-            Clear
-          </button>
+          <div className="flex gap-5 items-center">
+            <div className="font-bold text-lg">TOTAL ${totalPrice}</div>
+            <button
+              className="border border-primary-700 px-3 py-1"
+              onClick={clearReservation}
+            >
+              Clear
+            </button>
+          </div>
         )}
       </div>
     </div>
