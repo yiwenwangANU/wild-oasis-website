@@ -1,13 +1,16 @@
-function ReservationForm({ maxCapacity }) {
+function ReservationForm({ maxCapacity, username, userImg }) {
   const guestList = Array.from({ length: maxCapacity }, (_, i) => {
     return { name: `${i + 1} guest${i === 0 ? "" : "s"}`, value: i + 1 };
   });
 
   return (
     <div className="flex flex-col bg-primary-900 flex-1">
-      <div className="bg-primary-800 flex justify-between h-10 text-primary-300 px-12 py-3 items-center">
+      <div className="bg-primary-800 flex justify-between h-10 text-primary-300 px-12 py-5 items-center">
         <div>Loggedin in as</div>
-        <div>Username</div>
+        <div className="flex items-center gap-4">
+          <img className="rounded-2xl w-8" src={userImg} alt="userImg" />
+          <div>{username}</div>
+        </div>
       </div>
       <form className="px-12 py-7">
         <div className="flex flex-col gap-4">

@@ -14,12 +14,14 @@ async function Reservation({ cabinId }) {
     { name, maxCapacity, regularPrice, discount, image },
     { maxBookingLength },
     bookedDates,
+    session,
   ] = await Promise.all([
     getCabin(cabinId),
     getSettings(),
     getBookedDatesByCabinId(cabinId),
+    getServerSession(authOptions),
   ]);
-  const session = await getServerSession(authOptions);
+
   return (
     <>
       <DateSelector
@@ -32,7 +34,11 @@ async function Reservation({ cabinId }) {
         image={image}
       />
       {session ? (
-        <ReservationForm maxCapacity={maxCapacity} />
+        <ReservationForm
+          maxCapacity={maxCapacity}
+          username={session.user.name}
+          userImg={session.user.image}
+        />
       ) : (
         <LoginMessage />
       )}
