@@ -1,6 +1,10 @@
+import { getServerSession } from "next-auth";
 import Link from "next/link";
-
-function Navigation() {
+import { authOptions } from "../_libs/auth";
+import Image from "next/image";
+async function Navigation() {
+  const session = await getServerSession(authOptions);
+  console.log(session);
   return (
     <nav className="z-10 text-xl">
       <ul className="flex gap-16 items-center">
@@ -21,12 +25,23 @@ function Navigation() {
           </Link>
         </li>
         <li>
-          <Link
-            className="hover:text-accent-400 transition-colors"
-            href="/account"
-          >
-            Guest Area
-          </Link>
+          {session ? (
+            <div className="flex items-center gap-2">
+              <img
+                className="rounded-2xl w-8"
+                src={session.user?.image}
+                alt="user aveta"
+              />
+              <span>{session.user?.name}</span>
+            </div>
+          ) : (
+            <Link
+              className="hover:text-accent-400 transition-colors"
+              href="/account"
+            >
+              Guest Area
+            </Link>
+          )}
         </li>
       </ul>
     </nav>
