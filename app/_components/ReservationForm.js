@@ -9,6 +9,7 @@ function ReservationForm({ maxCapacity, username, userImg }) {
   });
   const {
     reservedCabinId,
+    reservedDate,
     guestNum,
     setGuestNum,
     reservationMessage,
@@ -52,9 +53,19 @@ function ReservationForm({ maxCapacity, username, userImg }) {
             placeholder="Any pets, allergies, special requirements, etc.?"
           ></textarea>
         </div>
-        <div className="flex-1 flex justify-end text-primary-200 pt-9">
-          <p>Start by selecting dates</p>
-        </div>
+        {pathname.includes(reservedCabinId) &&
+        reservedDate?.from &&
+        guestNum ? (
+          <div className="flex-1 flex justify-end pt-7 ">
+            <button className="bg-accent-500 text-primary-800 text-lg px-5 py-1 rounded-sm hover:bg-accent-600">
+              Reserve now
+            </button>
+          </div>
+        ) : (
+          <div className="flex-1 flex justify-end text-primary-200 pt-9">
+            <p>Start by selecting dates and guest number.</p>
+          </div>
+        )}
       </form>
     </div>
   );
