@@ -62,7 +62,7 @@ function DateSelector({
           range_end: `bg-accent-500 rounded-r-3xl`,
         }}
       />
-      <div className="bg-accent-500 flex-1 px-8 flex items-center text-primary-800 justify-between">
+      <div className="bg-accent-500 flex-1 px-8 flex items-center text-primary-800 justify-between min-h-16">
         <div className="flex gap-5 items-center">
           <div>
             <span className="text-2xl">${regularPrice - discount} </span>

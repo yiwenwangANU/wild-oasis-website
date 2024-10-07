@@ -5,6 +5,9 @@ import {
   getCabin,
   getSettings,
 } from "@/app/_libs/data-service";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/_libs/auth";
+import LoginMessage from "./LoginMessage";
 
 async function Reservation({ cabinId }) {
   const [
@@ -16,7 +19,7 @@ async function Reservation({ cabinId }) {
     getSettings(),
     getBookedDatesByCabinId(cabinId),
   ]);
-
+  const session = await getServerSession(authOptions);
   return (
     <>
       <DateSelector
@@ -28,7 +31,11 @@ async function Reservation({ cabinId }) {
         bookedDates={bookedDates}
         image={image}
       />
-      <ReservationForm maxCapacity={maxCapacity} />
+      {session ? (
+        <ReservationForm maxCapacity={maxCapacity} />
+      ) : (
+        <LoginMessage />
+      )}
     </>
   );
 }

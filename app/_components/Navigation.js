@@ -1,10 +1,9 @@
 import { getServerSession } from "next-auth";
 import Link from "next/link";
 import { authOptions } from "../_libs/auth";
-import Image from "next/image";
 async function Navigation() {
   const session = await getServerSession(authOptions);
-  console.log(session);
+
   return (
     <nav className="z-10 text-xl">
       <ul className="flex gap-16 items-center">
