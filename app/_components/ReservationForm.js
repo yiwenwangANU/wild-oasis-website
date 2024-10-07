@@ -1,7 +1,20 @@
+"use client";
+
+import { useReservation } from "@/app/_components/ReservationContext";
+import { usePathname } from "next/navigation";
+
 function ReservationForm({ maxCapacity, username, userImg }) {
   const guestList = Array.from({ length: maxCapacity }, (_, i) => {
     return { name: `${i + 1} guest${i === 0 ? "" : "s"}`, value: i + 1 };
   });
+  const {
+    reservedCabinId,
+    guestNum,
+    setGuestNum,
+    reservationMessage,
+    setReservationMessage,
+  } = useReservation();
+  const pathname = usePathname();
 
   return (
     <div className="flex flex-col bg-primary-900 flex-1">
@@ -16,7 +29,8 @@ function ReservationForm({ maxCapacity, username, userImg }) {
         <div className="flex flex-col gap-4">
           <div>How many guests?</div>
           <select
-            defaultValue=""
+            defaultValue={pathname.includes(reservedCabinId) ? guestNum : ""}
+            onChange={(e) => setGuestNum(e.target.value)}
             className="bg-primary-200 text-primary-900 w-full h-10 px-4 rounded-sm"
           >
             <option value="" disabled>
@@ -30,11 +44,15 @@ function ReservationForm({ maxCapacity, username, userImg }) {
           </select>
           <div>Anything we should know about your stay?</div>
           <textarea
+            defaultValue={
+              pathname.includes(reservedCabinId) ? reservationMessage : ""
+            }
+            onChange={(e) => setReservationMessage(e.target.value)}
             className="h-20 bg-primary-200 px-4 rounded-sm py-4 text-primary-900"
             placeholder="Any pets, allergies, special requirements, etc.?"
           ></textarea>
         </div>
-        <div className="flex-1 flex justify-end text-primary-200  pt-9">
+        <div className="flex-1 flex justify-end text-primary-200 pt-9">
           <p>Start by selecting dates</p>
         </div>
       </form>
