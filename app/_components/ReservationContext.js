@@ -14,6 +14,7 @@ function ReservationProvider({ children }) {
   const [totalDays, setTotalDays] = useState();
   const [guestNum, setGuestNum] = useState();
   const [reservationMessage, setReservationMessage] = useState();
+
   const clearReservation = () => {
     setReservedDate(initialState);
     setReservedCabinId("");
@@ -24,6 +25,13 @@ function ReservationProvider({ children }) {
     setGuestNum("");
     setReservationMessage("");
   };
+
+  const clearDateSelection = () => {
+    setReservedDate(initialState);
+    setReservationPrice("");
+    setTotalDays("");
+  };
+
   return (
     <ReservationContext.Provider
       value={{
@@ -32,6 +40,7 @@ function ReservationProvider({ children }) {
         reservedDate,
         setReservedDate,
         clearReservation,
+        clearDateSelection,
         reservedCabin,
         setReservedCabin,
         reservationPrice,

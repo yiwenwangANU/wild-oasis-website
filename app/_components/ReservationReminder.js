@@ -35,18 +35,27 @@ function ReservationReminder() {
           <p className="text-sm font-bold text-primary-200">
             Finish your booking!{" "}
           </p>
-          <ChevronRightIcon className="w-6 font-bold translate-y-7 translate-x-3" />
+          <ChevronRightIcon className="w-6 font-bold translate-y-7 translate-x-5" />
         </div>
         <div className="flex gap-2">
           <div>
-            <p className="text-xs font-normal text-primary-200">
-              Cabin {reservedCabin} for
-            </p>
-            <p className="text-2xl text-primary-50">${reservationPrice}</p>
+            {reservationPrice ? (
+              <>
+                <p className="text-xs font-normal text-primary-200">
+                  Cabin {reservedCabin} for
+                </p>
+                <p className="text-2xl text-primary-50">${reservationPrice}</p>
+              </>
+            ) : (
+              <p className="text-lg font-semibold text-primary-200">
+                Cabin <br />
+                {reservedCabin}
+              </p>
+            )}
           </div>
           <div className="flex-1 ">
             <Image
-              width={60}
+              width={reservationPrice ? 60 : 80}
               height={60}
               src={reservedCabinImage}
               alt="cabin image"
@@ -54,10 +63,12 @@ function ReservationReminder() {
             />
           </div>
         </div>
-        <p className="text-xs text-primary-200">
-          from {reservedDate?.from?.toLocaleDateString("en-US")} to{" "}
-          {reservedDate?.to?.toLocaleDateString("en-US")}
-        </p>
+        {reservedDate?.from && (
+          <p className="text-xs text-primary-200">
+            from {reservedDate?.from?.toLocaleDateString("en-US")} to{" "}
+            {reservedDate?.to?.toLocaleDateString("en-US")}
+          </p>
+        )}
       </Link>
     </div>
   );

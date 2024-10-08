@@ -22,7 +22,7 @@ function DateSelector({
     reservationPrice,
     totalDays,
     setReservedDate,
-    clearReservation,
+    clearDateSelection,
     setReservedCabin,
     setReservationPrice,
     setReservedCabinImage,
@@ -90,7 +90,7 @@ function DateSelector({
             <div className="font-bold text-lg">TOTAL ${reservationPrice}</div>
             <button
               className="border border-primary-700 px-3 py-1"
-              onClick={clearReservation}
+              onClick={clearDateSelection}
             >
               Clear
             </button>
