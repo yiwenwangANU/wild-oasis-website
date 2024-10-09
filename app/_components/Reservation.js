@@ -13,12 +13,13 @@ async function Reservation({ cabinId }) {
     { name, maxCapacity, regularPrice, discount, image },
     { maxBookingLength },
     bookedDates,
+    session,
   ] = await Promise.all([
     getCabin(cabinId),
     getSettings(),
     getBookedDatesByCabinId(cabinId),
+    auth(),
   ]);
-  const session = await auth();
 
   return (
     <>

@@ -24,14 +24,14 @@ async function Navigation() {
         </li>
         <li>
           {session ? (
-            <div className="flex items-center gap-2">
+            <Link href="/account" className="flex items-center gap-2">
               <img
                 className="rounded-2xl w-8"
                 src={session.user?.image}
                 alt="user aveta"
               />
               <span>{session.user?.name}</span>
-            </div>
+            </Link>
           ) : (
             <Link
               className="hover:text-accent-400 transition-colors"
