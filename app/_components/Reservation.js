@@ -5,8 +5,7 @@ import {
   getCabin,
   getSettings,
 } from "@/app/_libs/data-service";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/_libs/auth";
+import { auth } from "@/app/_libs/auth";
 import LoginMessage from "./LoginMessage";
 
 async function Reservation({ cabinId }) {
@@ -14,13 +13,12 @@ async function Reservation({ cabinId }) {
     { name, maxCapacity, regularPrice, discount, image },
     { maxBookingLength },
     bookedDates,
-    session,
   ] = await Promise.all([
     getCabin(cabinId),
     getSettings(),
     getBookedDatesByCabinId(cabinId),
-    getServerSession(authOptions),
   ]);
+  const session = await auth();
 
   return (
     <>

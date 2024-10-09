@@ -1,8 +1,7 @@
-import { getServerSession } from "next-auth";
+import { auth } from "@/app/_libs/auth";
 import Link from "next/link";
-import { authOptions } from "../_libs/auth";
 async function Navigation() {
-  const session = await getServerSession(authOptions);
+  const session = await auth();
 
   return (
     <nav className="z-10 text-xl">
