@@ -4,7 +4,7 @@ export default function SignIn() {
   return (
     <>
       <h1 className="text-3xl text-center text-primary-100 ">
-        Sign in to access your guest area
+        Login in or Sign up to continue
       </h1>
       <div className="flex flex-col items-center p-10 max-w-fit mx-auto">
         <form
@@ -24,7 +24,7 @@ export default function SignIn() {
               height="20"
               width="20"
             />
-            <div className="translate-x-3">Signin with Google</div>
+            <div className="translate-x-3">Sign in with Google</div>
           </button>
         </form>
       </div>
