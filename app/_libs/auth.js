@@ -13,6 +13,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       return !!auth;
     },
     async signIn({ user, account, profile }) {
+      //create new user in supabase if oauth email not exist
       try {
         const existingGuest = await getGuest(user.email);
         if (!existingGuest) {
@@ -23,6 +24,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       } catch {
         return false;
       }
+    },
+    async session({ session, user }) {
+      // add user id(from supabase) to session
+      const guest = await getGuest(session.user.email);
+      session.user.guestId = guest.id;
+      return session;
     },
   },
 });
