@@ -22,7 +22,7 @@ function ReservationForm({ maxCapacity, username, userImg }) {
       <div className="bg-primary-800 flex justify-between h-10 text-primary-300 px-12 py-5 items-center">
         <div>Loggedin in as</div>
         <div className="flex items-center gap-4">
-          <img className="rounded-2xl w-8" src={userImg} alt="userImg" />
+          <img className="rounded-2xl w-8" src={userImg} alt="" />
           <div>{username}</div>
         </div>
       </div>
