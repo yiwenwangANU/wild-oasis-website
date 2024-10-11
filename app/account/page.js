@@ -5,6 +5,7 @@ export const metadata = {
 };
 async function page() {
   const session = await auth();
+
   return (
     <>
       <h1 className="px-12 py-4 text-2xl text-accent-400 font-semibold">

@@ -1,13 +1,30 @@
 "use client";
 import { useForm } from "react-hook-form";
 
-function GuestForm({ children }) {
+function GuestForm({ children, guest }) {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => console.log(data);
+  const { fullName, email, nationality, nationalID } = guest;
+
+  const onSubmit = async (data) => {
+    try {
+      const response = await fetch("/api/update-profile", {
+        method: "POST",
+        body: JSON.stringify(data),
+      });
+
+      if (response.ok) {
+        console.log("Profile updated successfully");
+      } else {
+        console.error("Error updating profile");
+      }
+    } catch (error) {
+      console.error("Network error:", error);
+    }
+  };
 
   return (
     <form
@@ -17,48 +34,36 @@ function GuestForm({ children }) {
       <div>
         <div className="py-3">Full Name</div>
         <input
+          defaultValue={fullName}
           className={`w-full text-primary-800  px-4 py-3 ${
-            errors["Full name"]
+            errors["fullName"]
               ? "bg-accent-100 border-l-8 border-accent-400"
               : "bg-primary-200"
           }`}
-          placeholder={errors["Full name"] ? "This field is required." : ""}
+          placeholder={errors["fullName"] ? "This field is required." : ""}
           type="text"
-          {...register("Full name", { required: true, maxLength: 80 })}
+          {...register("fullName", { required: true, maxLength: 80 })}
         />
       </div>
       <div className="relative">
         <div className="py-3">Email address</div>
         <input
-          className={`block w-full text-primary-800  px-4 py-3 ${
-            errors["Email"]
-              ? "bg-accent-100 border-l-8 border-accent-400"
-              : "bg-primary-200"
-          }`}
-          placeholder={
-            errors["Email"]?.type === "required"
-              ? "This field is required."
-              : ""
-          }
+          defaultValue={email}
+          disabled
+          className="block w-full text-primary-400  px-4 py-3 bg-primary-600"
           type="text"
-          {...register("Email", { required: true, pattern: /^\S+@\S+$/i })}
         />
-        {errors["Email"]?.type === "pattern" && (
-          <label className="absolute z-10 top-3 right-2.5 transition duration-300 text-red-400">
-            Invalid Email address.
-          </label>
-        )}
       </div>
       <div>
         <div className="py-3">Where are you from?</div>
         <select
           className={`w-full text-primary-800  px-4 py-3 ${
-            errors["Country"]
+            errors["country"]
               ? "bg-accent-100 border-l-8 border-accent-400"
               : "bg-primary-200"
           }`}
-          defaultValue=""
-          {...register("Country", {
+          defaultValue={nationality ? nationality : ""}
+          {...register("country", {
             validate: (value) => value !== "",
           })}
         >
@@ -71,13 +76,14 @@ function GuestForm({ children }) {
       <div>
         <div className="py-3">National ID number</div>
         <input
+          defaultValue={nationalID}
           className={`w-full text-primary-800  px-4 py-3 ${
             errors["National ID"]
               ? "bg-accent-100 border-l-8 border-accent-400"
               : "bg-primary-200"
           }`}
-          placeholder={errors["National ID"] ? "This field is required." : ""}
-          {...register("National ID", { required: true })}
+          placeholder={errors["nationalID"] ? "This field is required." : ""}
+          {...register("nationalID", { required: true })}
           type="text"
         />
       </div>
