@@ -4,7 +4,6 @@ import { updateProfile } from "@/app/_libs/actions";
 export async function POST(request) {
   try {
     const data = await request.json();
-
     await updateProfile(data);
 
     return NextResponse.json(
@@ -13,6 +12,6 @@ export async function POST(request) {
     );
   } catch (error) {
     console.error("Error updating profile:", error);
-    return NextResponse.json({ message: "Server error" }, { status: 500 });
+    return NextResponse.json({ message: error.message }, { status: 400 });
   }
 }

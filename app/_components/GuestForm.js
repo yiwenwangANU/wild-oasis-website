@@ -1,5 +1,7 @@
 "use client";
 import { useForm } from "react-hook-form";
+import { useState } from "react";
+import toast from "react-hot-toast";
 
 function GuestForm({ children, guest }) {
   const {
@@ -8,18 +10,17 @@ function GuestForm({ children, guest }) {
     formState: { errors },
   } = useForm();
   const { fullName, email, nationality, nationalID } = guest;
-
   const onSubmit = async (data) => {
     try {
       const response = await fetch("/api/update-profile", {
         method: "POST",
         body: JSON.stringify(data),
       });
-
+      const result = await response.json();
       if (response.ok) {
         console.log("Profile updated successfully");
       } else {
-        console.error("Error updating profile");
+        toast.error(result.message);
       }
     } catch (error) {
       console.error("Network error:", error);
@@ -77,8 +78,8 @@ function GuestForm({ children, guest }) {
         <div className="py-3">National ID number</div>
         <input
           defaultValue={nationalID}
-          className={`w-full text-primary-800  px-4 py-3 ${
-            errors["National ID"]
+          className={`w-full text-primary-800 px-4 py-3 ${
+            errors["nationalID"]
               ? "bg-accent-100 border-l-8 border-accent-400"
               : "bg-primary-200"
           }`}

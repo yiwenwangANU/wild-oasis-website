@@ -3,6 +3,7 @@ import Header from "@/app/_components/Header";
 import { Josefin_Sans } from "next/font/google";
 import { ReservationProvider } from "@/app/_components/ReservationContext";
 import ReservationReminder from "./_components/ReservationReminder";
+import { Toaster } from "react-hot-toast";
 
 const josefin = Josefin_Sans({ subsets: ["latin"], display: "swap" });
 
@@ -22,6 +23,7 @@ export default function RootLayout({ children }) {
         <main className="max-w-7xl mx-auto flex-1 py-12 w-full ">
           <ReservationProvider>
             <ReservationReminder />
+            <Toaster />
             {children}
           </ReservationProvider>
         </main>
