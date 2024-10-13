@@ -1,6 +1,5 @@
 "use client";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
 import toast from "react-hot-toast";
 
 function GuestForm({ children, guest }) {
@@ -18,7 +17,7 @@ function GuestForm({ children, guest }) {
       });
       const result = await response.json();
       if (response.ok) {
-        console.log("Profile updated successfully");
+        toast.success("Profile updated successfully");
       } else {
         toast.error(result.message);
       }
@@ -59,12 +58,12 @@ function GuestForm({ children, guest }) {
         <div className="py-3">Where are you from?</div>
         <select
           className={`w-full text-primary-800  px-4 py-3 ${
-            errors["country"]
+            errors["nationality"]
               ? "bg-accent-100 border-l-8 border-accent-400"
               : "bg-primary-200"
           }`}
           defaultValue={nationality ? nationality : ""}
-          {...register("country", {
+          {...register("nationality", {
             validate: (value) => value !== "",
           })}
         >

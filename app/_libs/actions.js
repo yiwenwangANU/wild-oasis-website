@@ -1,6 +1,7 @@
 "use server";
 
 import { auth } from "./auth";
+import { supabase } from "./supabase";
 
 export async function updateProfile(data) {
   const session = await auth();
@@ -9,4 +10,14 @@ export async function updateProfile(data) {
   const { fullName, country, nationalID } = data;
   if (!/^[a-zA-Z0-9]{6,12}$/.test(nationalID))
     throw new Error("Invalid nationalID.");
+
+  const { error } = await supabase
+    .from("guests")
+    .update(data)
+    .eq("id", session.user.guestId)
+    .select();
+  if (error) {
+    console.log(error);
+    throw new Error("Guest could not be updated.");
+  }
 }
