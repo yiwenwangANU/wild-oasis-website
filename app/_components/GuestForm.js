@@ -2,13 +2,14 @@
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
+import Spinner from "./Spinner";
 
 function GuestForm({ children, guest }) {
   const router = useRouter();
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm();
   const { fullName, email, nationality, nationalID } = guest;
   const onSubmit = async (data) => {
@@ -92,12 +93,16 @@ function GuestForm({ children, guest }) {
         />
       </div>
       <div className="flex justify-end">
-        <button
-          type="submit"
-          className=" text-primary-800 text-center text-lg font-semibold bg-accent-500 px-6 py-3 mt-5 hover:bg-accent-600 transition-colors "
-        >
-          Update profile
-        </button>
+        {isSubmitting ? (
+          <Spinner />
+        ) : (
+          <button
+            type="submit"
+            className="text-primary-800 text-center text-lg font-semibold bg-accent-500 px-6 py-3 mt-5 hover:bg-accent-600 transition-colors "
+          >
+            Update profile
+          </button>
+        )}
       </div>
     </form>
   );
