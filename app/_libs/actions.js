@@ -1,5 +1,6 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import { auth } from "./auth";
 import { supabase } from "./supabase";
 
@@ -11,7 +12,7 @@ export async function updateProfile(data) {
   if (!/^[a-zA-Z0-9]{6,12}$/.test(nationalID))
     throw new Error("Invalid nationalID.");
 
-  const { error } = await supabase
+  const { data: guestData, error } = await supabase
     .from("guests")
     .update(data)
     .eq("id", session.user.guestId)
@@ -20,4 +21,5 @@ export async function updateProfile(data) {
     console.log(error);
     throw new Error("Guest could not be updated.");
   }
+  revalidatePath("/account/profile");
 }

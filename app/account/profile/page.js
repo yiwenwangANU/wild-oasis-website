@@ -3,6 +3,7 @@ import SelectCountry from "@/app/_components/SelectCountry";
 import { auth } from "@/app/_libs/auth";
 import { getGuest } from "@/app/_libs/data-service";
 export const metadata = { title: "Update Profile" };
+export const revalidate = 0;
 async function page() {
   const session = await auth();
   const guest = await getGuest(session.user.email);

@@ -1,8 +1,10 @@
 "use client";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
 function GuestForm({ children, guest }) {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -18,6 +20,8 @@ function GuestForm({ children, guest }) {
       const result = await response.json();
       if (response.ok) {
         toast.success("Profile updated successfully");
+        // After successful profile update
+        router.refresh();
       } else {
         toast.error(result.message);
       }
