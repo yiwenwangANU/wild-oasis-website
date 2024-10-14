@@ -43,24 +43,25 @@ function ReservationCard({ booking }) {
         <div className="flex justify-between items-center px-3 py-2">
           <div className="flex gap-6">
             <div className="text-lg text-accent-400">${totalPrice}</div>
-            <div>
+            <div className="text-primary-300">
               {numGuests} {numGuests > 1 ? "guests" : "guest"}
             </div>
           </div>
-          <div>
+          <div className="text-primary-300">
             Booked at {format(created_at, "EEEE, MMM d yyyy, hh:mm:ss a")}
           </div>
         </div>
       </div>
-      <div className="flex-none flex-col border-l border-primary-800 items-center">
-        <div className="border-b border-primary-800 flex gap-3 items-center px-5 py-4 ">
+      <div className="flex-none flex flex-col border-l font-semibold border-primary-800 text-sm text-primary-300">
+        <button className="flex gap-3 items-center px-4 py-4 basis-1/2 transition-colors duration-200 hover:bg-accent-700 hover:text-primary-950">
           <PencilIcon width={14} />
           EDIT
-        </div>
-        <div className="flex gap-3 items-center px-5 py-4 ">
+        </button>
+
+        <button className="border-t border-primary-800 flex gap-3 items-center px-4 py-4 basis-1/2 transition-colors duration-200 hover:bg-accent-700 hover:text-primary-950">
           <TrashIcon width={14} />
           DELETE
-        </div>
+        </button>
       </div>
     </div>
   );
