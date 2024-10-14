@@ -1,3 +1,4 @@
+import ReservationCard from "@/app/_components/ReservationCard";
 import { auth } from "@/app/_libs/auth";
 import { getBookings } from "@/app/_libs/data-service";
 import Link from "next/link";
@@ -11,12 +12,18 @@ async function page() {
       <h1 className="text-2xl text-accent-400 font-semibold">
         Your reservations
       </h1>
-      <p className="pt-6">
-        You have no reservations yet. Check out our{" "}
-        <Link href="/cabins" className="underline text-accent-400">
-          luxury cabins →
-        </Link>
-      </p>
+      {bookings.length > 0 ? (
+        bookings.map((booking) => (
+          <ReservationCard booking={booking} key={booking.id} />
+        ))
+      ) : (
+        <p className="pt-6">
+          You have no reservations yet. Check out our{" "}
+          <Link href="/cabins" className="underline text-accent-400">
+            luxury cabins →
+          </Link>
+        </p>
+      )}
     </div>
   );
 }
