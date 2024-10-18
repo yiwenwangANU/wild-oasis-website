@@ -5,6 +5,7 @@ import ReservationOperations from "./ReservationOperations";
 
 function ReservationCard({ booking }) {
   const {
+    id,
     created_at,
     startDate,
     endDate,
@@ -52,7 +53,7 @@ function ReservationCard({ booking }) {
           </div>
         </div>
       </div>
-      <ReservationOperations />
+      <ReservationOperations id={id} />
     </div>
   );
 }

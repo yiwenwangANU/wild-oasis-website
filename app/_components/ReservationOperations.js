@@ -3,7 +3,7 @@ import { PencilIcon, TrashIcon } from "@heroicons/react/24/solid";
 import Modal from "./Modal";
 import ConfirmDelete from "./ConfirmDelete";
 
-function ReservationOperations() {
+function ReservationOperations({ id }) {
   return (
     <div className="flex-none flex flex-col border-l font-semibold border-primary-800 text-sm text-primary-300">
       <button className="flex gap-3 items-center px-4 py-4 basis-1/2 transition-colors duration-200 hover:bg-accent-700 hover:text-primary-950">
@@ -18,7 +18,7 @@ function ReservationOperations() {
           </div>
         </Modal.Open>
         <Modal.Window>
-          <ConfirmDelete />
+          <ConfirmDelete id={id} />
         </Modal.Window>
       </Modal>
     </div>

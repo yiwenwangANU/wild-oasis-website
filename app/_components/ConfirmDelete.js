@@ -1,4 +1,26 @@
-function ConfirmDelete() {
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
+
+function ConfirmDelete({ id }) {
+  const router = useRouter();
+  const handleDelete = async (id) => {
+    try {
+      const response = await fetch("/api/delete-reservation", {
+        method: "POST",
+        body: JSON.stringify(id),
+      });
+      const result = await response.json();
+      if (response.ok) {
+        toast.success("Reservation deleted successfully");
+        // After successful profile update
+        router.refresh();
+      } else {
+        toast.error(result.message);
+      }
+    } catch (error) {
+      console.error("Network error:", error);
+    }
+  };
   return (
     <div>
       <div className="uppercase text-white text-xl pb-3">
@@ -12,7 +34,10 @@ function ConfirmDelete() {
         <button className="border border-primary-800 px-3 py-2 rounded-md text-white hover:bg-primary-950">
           Cancel
         </button>
-        <button className="border border-primary-800 px-3 py-2 bg-red-600 text-white rounded-md hover:bg-red-800">
+        <button
+          className="border border-primary-800 px-3 py-2 bg-red-600 text-white rounded-md hover:bg-red-800"
+          onClick={() => handleDelete(id)}
+        >
           Delete
         </button>
       </div>

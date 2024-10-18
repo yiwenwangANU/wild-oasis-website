@@ -6,7 +6,7 @@ export const metadata = { title: "Reservations" };
 async function page() {
   const session = await auth();
   const bookings = await getBookings(session.user.guestId);
-  console.log(bookings);
+
   return (
     <div className="px-12 py-4 ">
       <h1 className="text-2xl text-accent-400 font-semibold">
