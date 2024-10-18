@@ -19,7 +19,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         if (!existingGuest) {
           await createGuest({ email: user.email, fullName: user.name });
         }
-
         return true;
       } catch {
         return false;
