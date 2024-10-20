@@ -36,11 +36,11 @@ function DateSelector({
   }, [reservedRange, setReservedDate, isEdit]);
 
   const handleSelect = (range) => {
-    setTotalDays(differenceInDays(range.to, range.from) + 1);
+    setTotalDays(differenceInDays(range?.to, range?.from) + 1);
     setReservedDate(range);
     setReservedCabin(name);
     setReservationPrice(
-      (differenceInDays(range.to, range.from) + 1) * (regularPrice - discount)
+      (differenceInDays(range?.to, range?.from) + 1) * (regularPrice - discount)
     );
     setReservedCabinId(cabinId);
     setReservedCabinImage(image);
