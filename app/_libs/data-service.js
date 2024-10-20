@@ -77,6 +77,56 @@ export async function getBooking(id) {
   return data;
 }
 
+export async function getCabinFromBookingId(bookingId) {
+  const { data, error } = await supabase
+    .from("bookings")
+    .select("cabins(*)")
+    .eq("id", bookingId)
+    .single();
+
+  if (error) {
+    console.error(error);
+    throw new Error("Booking could not get loaded");
+  }
+
+  return data;
+}
+
+export async function getReservationRangeByBookingId(bookingId) {
+  const { data, error } = await supabase
+    .from("bookings")
+    .select("startDate, endDate")
+    .eq("id", bookingId)
+    .single();
+
+  if (error) {
+    console.error(error);
+    throw new Error("Bookings could not get loaded");
+  }
+  return {
+    from: new Date(data.startDate),
+    to: new Date(data.endDate),
+  };
+}
+
+export async function getBookedDatesByBookingIdExcludeOwn(bookingId) {
+  const { data: bookingData, error: bookingError } = await supabase
+    .from("bookings")
+    .select("cabinId, startDate, endDate")
+    .eq("id", bookingId)
+    .single();
+
+  if (bookingError) {
+    console.error("Error fetching cabinId:", bookingError);
+  } else {
+    const cabinId = bookingData.cabinId;
+    const bookedDate = await getBookedDatesByCabinId(cabinId);
+    const filteredDates = bookedDate.filter(
+      (date) => date < bookingData.startDate || date > bookingData.endDate
+    );
+    return filteredDates;
+  }
+}
 export async function getBookings(guestId) {
   const { data, error, count } = await supabase
     .from("bookings")

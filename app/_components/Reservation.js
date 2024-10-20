@@ -31,6 +31,7 @@ async function Reservation({ cabinId }) {
         discount={discount}
         bookedDates={bookedDates}
         image={image}
+        isEdit={false}
       />
       {session ? (
         <ReservationForm

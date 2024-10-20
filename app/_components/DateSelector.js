@@ -6,6 +6,7 @@ import { useReservation } from "@/app/_components/ReservationContext";
 import { differenceInDays } from "date-fns";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import { usePathname } from "next/navigation";
+import { useEffect } from "react";
 function DateSelector({
   cabinId,
   name,
@@ -14,6 +15,8 @@ function DateSelector({
   discount,
   bookedDates,
   image,
+  reservedRange,
+  isEdit,
 }) {
   const {
     reservedCabinId,
@@ -29,6 +32,10 @@ function DateSelector({
     setTotalDays,
   } = useReservation();
 
+  useEffect(() => {
+    if (reservedRange) setReservedDate(reservedRange);
+  }, [reservedRange, setReservedDate]);
+
   const handleSelect = (range) => {
     setTotalDays(differenceInDays(range.to, range.from) + 1);
     setReservedDate(range);
@@ -38,6 +45,7 @@ function DateSelector({
     );
     setReservedCabinId(cabinId);
     setReservedCabinImage(image);
+    reservedRange = null;
   };
   const pathname = usePathname();
 
@@ -48,8 +56,12 @@ function DateSelector({
         max={maxBookingLength}
         numberOfMonths={2}
         disabled={bookedDates}
-        selected={pathname.includes(reservedCabinId) && reservedDate}
-        onSelect={handleSelect}
+        selected={
+          (pathname.includes(reservedCabinId) || isEdit) && reservedDate
+        }
+        onSelect={(range) => {
+          handleSelect(range);
+        }}
         className="scale-75 -mx-10"
         classNames={{
           today: `text-accent-0`,
