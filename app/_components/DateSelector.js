@@ -10,7 +10,6 @@ import { useEffect } from "react";
 function DateSelector({
   cabinId,
   name,
-  maxBookingLength,
   regularPrice,
   discount,
   bookedDates,
@@ -55,7 +54,6 @@ function DateSelector({
     <div className="flex flex-col">
       <DayPicker
         mode="range"
-        max={maxBookingLength}
         numberOfMonths={2}
         disabled={[{ before: tomorrow }, ...bookedDates]}
         selected={

@@ -11,12 +11,10 @@ import LoginMessage from "./LoginMessage";
 async function Reservation({ cabinId }) {
   const [
     { name, maxCapacity, regularPrice, discount, image },
-    { maxBookingLength },
     bookedDates,
     session,
   ] = await Promise.all([
     getCabin(cabinId),
-    getSettings(),
     getBookedDatesByCabinId(cabinId),
     auth(),
   ]);
@@ -26,7 +24,6 @@ async function Reservation({ cabinId }) {
       <DateSelector
         name={name}
         cabinId={cabinId}
-        maxBookingLength={maxBookingLength}
         regularPrice={regularPrice}
         discount={discount}
         bookedDates={bookedDates}

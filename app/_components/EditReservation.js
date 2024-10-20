@@ -11,13 +11,11 @@ import { auth } from "@/app/_libs/auth";
 async function EditReservation({ bookingId }) {
   const [
     { maxCapacity, regularPrice, discount },
-    { maxBookingLength },
     reservedRange,
     bookedDates,
     session,
   ] = await Promise.all([
     getCabinFromBookingId(bookingId),
-    getSettings(),
     getReservationRangeByBookingId(bookingId),
     getBookedDatesByBookingIdExcludeOwn(bookingId),
     auth(),
