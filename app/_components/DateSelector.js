@@ -33,8 +33,8 @@ function DateSelector({
   } = useReservation();
 
   useEffect(() => {
-    if (reservedRange) setReservedDate(reservedRange);
-  }, [reservedRange, setReservedDate]);
+    if (reservedRange && isEdit) setReservedDate(reservedRange);
+  }, [reservedRange, setReservedDate, isEdit]);
 
   const handleSelect = (range) => {
     setTotalDays(differenceInDays(range.to, range.from) + 1);
@@ -48,14 +48,16 @@ function DateSelector({
     reservedRange = null;
   };
   const pathname = usePathname();
-
+  const tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  tomorrow.setHours(0, 0, 0, 0);
   return (
     <div className="flex flex-col">
       <DayPicker
         mode="range"
         max={maxBookingLength}
         numberOfMonths={2}
-        disabled={bookedDates}
+        disabled={[{ before: tomorrow }, ...bookedDates]}
         selected={
           (pathname.includes(reservedCabinId) || isEdit) && reservedDate
         }
