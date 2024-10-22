@@ -127,8 +127,10 @@ export async function getBookedDatesByBookingIdExcludeOwn(bookingId) {
     console.log(bookedDate);
 
     const filteredDates = bookedDate.filter((date) => {
-      const dateStr = date.toISOString();
-      return dateStr < startDate || dateStr > endDate;
+      return (
+        date.getTime() < new Date(startDate + "Z").getTime() ||
+        date.getTime() > new Date(endDate + "Z").getTime()
+      );
     });
     console.log(filteredDates);
     return filteredDates;
