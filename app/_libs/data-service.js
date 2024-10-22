@@ -1,6 +1,7 @@
-import { eachDayOfInterval } from "date-fns";
 import { supabase } from "./supabase";
 import { notFound } from "next/navigation";
+import { eachDayOfInterval } from "./helper";
+import { DateTime } from "luxon";
 /////////////
 // GET
 
@@ -115,18 +116,25 @@ export async function getBookedDatesByBookingIdExcludeOwn(bookingId) {
     .select("cabinId, startDate, endDate")
     .eq("id", bookingId)
     .single();
-
+  console.log(`booking id: ${bookingId}`);
+  console.log(bookingData);
   if (bookingError) {
     console.error("Error fetching cabinId:", bookingError);
   } else {
-    const cabinId = bookingData.cabinId;
+    const { cabinId, startDate, endDate } = bookingData;
+
     const bookedDate = await getBookedDatesByCabinId(cabinId);
-    const filteredDates = bookedDate.filter(
-      (date) => date < bookingData.startDate || date > bookingData.endDate
-    );
+    console.log(bookedDate);
+
+    const filteredDates = bookedDate.filter((date) => {
+      const dateStr = date.toISOString();
+      return dateStr < startDate || dateStr > endDate;
+    });
+    console.log(filteredDates);
     return filteredDates;
   }
 }
+
 export async function getBookings(guestId) {
   const { data, error, count } = await supabase
     .from("bookings")
@@ -146,29 +154,40 @@ export async function getBookings(guestId) {
 }
 
 export async function getBookedDatesByCabinId(cabinId) {
-  let today = new Date();
-  today.setUTCHours(0, 0, 0, 0);
-  today = today.toISOString();
+  const today = DateTime.utc().startOf("day");
 
   // Getting all bookings
   const { data, error } = await supabase
     .from("bookings")
     .select("*")
     .eq("cabinId", cabinId)
-    .or(`startDate.gte.${today},status.eq.checked-in`);
+    .gte("startDate", today.toISO());
 
   if (error) {
     console.error(error);
     throw new Error("Bookings could not get loaded");
   }
-
+  console.log(data);
   // Converting to actual dates to be displayed in the date picker
+
   const bookedDates = data
     .map((booking) => {
-      return eachDayOfInterval({
-        start: new Date(booking.startDate),
-        end: new Date(booking.endDate),
-      });
+      const startDate = DateTime.fromISO(booking.startDate, {
+        zone: "utc",
+      }).startOf("day");
+      const endDate = DateTime.fromISO(booking.endDate, {
+        zone: "utc",
+      }).startOf("day");
+
+      const dates = [];
+      let currentDate = startDate;
+
+      while (currentDate <= endDate) {
+        dates.push(currentDate.toJSDate());
+        currentDate = currentDate.plus({ days: 1 });
+      }
+
+      return dates;
     })
     .flat();
 

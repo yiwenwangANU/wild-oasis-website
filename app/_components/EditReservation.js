@@ -4,7 +4,6 @@ import {
   getBookedDatesByBookingIdExcludeOwn,
   getCabinFromBookingId,
   getReservationRangeByBookingId,
-  getSettings,
 } from "@/app/_libs/data-service";
 import { auth } from "@/app/_libs/auth";
 
@@ -21,16 +20,19 @@ async function EditReservation({ bookingId }) {
     auth(),
   ]);
   // console.log(bookedDates);
-  // console.log(reservedRange);
+  const tomorrow = new Date();
+  tomorrow.setUTCDate(tomorrow.getUTCDate() + 1);
+  tomorrow.setUTCHours(0, 0, 0, 0);
+
   return (
     <>
       <DateSelector
-        maxBookingLength={maxBookingLength}
         regularPrice={regularPrice}
         discount={discount}
         bookedDates={bookedDates}
         reservedRange={reservedRange}
         isEdit={true}
+        tomorrow={tomorrow}
       />
 
       <ReservationForm

@@ -16,6 +16,7 @@ function DateSelector({
   image,
   reservedRange,
   isEdit,
+  tomorrow,
 }) {
   const {
     reservedCabinId,
@@ -47,9 +48,8 @@ function DateSelector({
     reservedRange = null;
   };
   const pathname = usePathname();
-  const tomorrow = new Date();
-  tomorrow.setDate(tomorrow.getDate() + 1);
-  tomorrow.setHours(0, 0, 0, 0);
+
+  // console.log(bookedDates);
   return (
     <div className="flex flex-col">
       <DayPicker
