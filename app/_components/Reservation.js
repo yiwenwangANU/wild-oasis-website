@@ -18,7 +18,9 @@ async function Reservation({ cabinId }) {
     getBookedDatesByCabinId(cabinId),
     auth(),
   ]);
-
+  const tomorrow = new Date();
+  tomorrow.setUTCDate(tomorrow.getUTCDate() + 1);
+  tomorrow.setUTCHours(0, 0, 0, 0);
   return (
     <>
       <DateSelector
@@ -28,6 +30,7 @@ async function Reservation({ cabinId }) {
         discount={discount}
         bookedDates={bookedDates}
         image={image}
+        tomorrow={tomorrow}
         isEdit={false}
       />
       {session ? (
