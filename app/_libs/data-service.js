@@ -116,15 +116,15 @@ export async function getBookedDatesByBookingIdExcludeOwn(bookingId) {
     .select("cabinId, startDate, endDate")
     .eq("id", bookingId)
     .single();
-  console.log(`booking id: ${bookingId}`);
-  console.log(bookingData);
+  // console.log(`booking id: ${bookingId}`);
+  // console.log(bookingData);
   if (bookingError) {
     console.error("Error fetching cabinId:", bookingError);
   } else {
     const { cabinId, startDate, endDate } = bookingData;
 
     const bookedDate = await getBookedDatesByCabinId(cabinId);
-    console.log(bookedDate);
+    // console.log(bookedDate);
 
     const filteredDates = bookedDate.filter((date) => {
       return (
@@ -132,7 +132,7 @@ export async function getBookedDatesByBookingIdExcludeOwn(bookingId) {
         date.getTime() > new Date(endDate + "Z").getTime()
       );
     });
-    console.log(filteredDates);
+    // console.log(filteredDates);
     return filteredDates;
   }
 }
@@ -169,7 +169,7 @@ export async function getBookedDatesByCabinId(cabinId) {
     console.error(error);
     throw new Error("Bookings could not get loaded");
   }
-  console.log(data);
+  // console.log(data);
   // Converting to actual dates to be displayed in the date picker
 
   const bookedDates = data

@@ -6,7 +6,12 @@ import { useReservation } from "@/app/_components/ReservationContext";
 import { differenceInDays } from "date-fns";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import { usePathname } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import {
+  getNearestDateOnLeft,
+  getNearestDateOnRight,
+  toUTCDate,
+} from "../_libs/helper";
 function DateSelector({
   cabinId,
   name,
@@ -37,25 +42,39 @@ function DateSelector({
   }, [reservedRange, setReservedDate, isEdit]);
 
   const handleSelect = (range) => {
-    setTotalDays(differenceInDays(range?.to, range?.from) + 1);
-    setReservedDate(range);
+    if (!range) return;
+    const utcFrom = toUTCDate(range.from);
+    const utcTo = toUTCDate(range.to);
+
+    setBookedDateBefore(getNearestDateOnLeft(range.from, bookedDates));
+    setBookedDateAfter(getNearestDateOnRight(range.from, bookedDates));
+
+    setTotalDays(differenceInDays(utcFrom, utcTo) + 1);
+    setReservedDate({ from: utcFrom, to: utcTo });
     setReservedCabin(name);
     setReservationPrice(
-      (differenceInDays(range?.to, range?.from) + 1) * (regularPrice - discount)
+      (differenceInDays(utcFrom, utcTo) + 1) * (regularPrice - discount)
     );
     setReservedCabinId(cabinId);
     setReservedCabinImage(image);
     reservedRange = null;
   };
+  console.log(reservedDate);
   const pathname = usePathname();
-
+  const [bookedDateBefore, setBookedDateBefore] = useState("");
+  const [bookedDateAfter, setBookedDateAfter] = useState("");
   // console.log(bookedDates);
   return (
     <div className="flex flex-col">
       <DayPicker
         mode="range"
         numberOfMonths={2}
-        disabled={[{ before: tomorrow }, ...bookedDates]}
+        disabled={[
+          { before: tomorrow },
+          { before: bookedDateBefore },
+          { after: bookedDateAfter },
+          ...bookedDates,
+        ]}
         selected={
           (pathname.includes(reservedCabinId) || isEdit) && reservedDate
         }

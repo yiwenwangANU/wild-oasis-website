@@ -1,3 +1,5 @@
+import { isAfter, isBefore, max, min } from "date-fns";
+
 export function formatDaysDifference(daysDifference) {
   if (daysDifference >= 60) {
     const months = Math.ceil(daysDifference / 30);
@@ -22,4 +24,34 @@ export function formatDaysDifference(daysDifference) {
     const days = -daysDifference;
     return `${days} day${days > 1 ? "s" : ""} ago`;
   }
+}
+
+export function toUTCDate(date) {
+  return new Date(
+    Date.UTC(
+      date.getFullYear(),
+      date.getMonth(),
+      date.getDate(),
+      date.getHours(),
+      date.getMinutes(),
+      date.getSeconds(),
+      date.getMilliseconds()
+    )
+  );
+}
+
+export function getNearestDateOnLeft(targetDate, bookedDates) {
+  if (!targetDate || !bookedDates) return;
+  const datesBeforeTarget = bookedDates.filter((date) =>
+    isBefore(date, targetDate)
+  );
+  if (datesBeforeTarget.length !== 0) return max(datesBeforeTarget);
+}
+
+export function getNearestDateOnRight(targetDate, bookedDates) {
+  if (!targetDate || !bookedDates) return;
+  const datesAfterTarget = bookedDates.filter((date) =>
+    isAfter(date, targetDate)
+  );
+  if (datesAfterTarget.length !== 0) return min(datesAfterTarget);
 }
