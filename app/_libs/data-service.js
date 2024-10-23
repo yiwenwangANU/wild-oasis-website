@@ -1,6 +1,5 @@
 import { supabase } from "./supabase";
 import { notFound } from "next/navigation";
-import { eachDayOfInterval } from "./helper";
 import { DateTime } from "luxon";
 /////////////
 // GET

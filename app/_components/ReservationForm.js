@@ -3,7 +3,13 @@
 import { useReservation } from "@/app/_components/ReservationContext";
 import { usePathname } from "next/navigation";
 
-function ReservationForm({ maxCapacity, username, userImg, isEdit }) {
+function ReservationForm({
+  maxCapacity,
+  username,
+  userImg,
+  isEdit,
+  numGuests,
+}) {
   const guestList = Array.from({ length: maxCapacity }, (_, i) => {
     return { name: `${i + 1} guest${i === 0 ? "" : "s"}`, value: i + 1 };
   });
@@ -32,7 +38,13 @@ function ReservationForm({ maxCapacity, username, userImg, isEdit }) {
         <div className="flex flex-col gap-4">
           <div>How many guests?</div>
           <select
-            defaultValue={pathname.includes(reservedCabinId) ? guestNum : ""}
+            defaultValue={
+              numGuests
+                ? numGuests
+                : pathname.includes(`/cabins/${reservedCabinId}`)
+                ? guestNum
+                : ""
+            }
             onChange={(e) => setGuestNum(e.target.value)}
             className="bg-primary-200 text-primary-900 w-full h-10 px-4 rounded-sm"
           >
@@ -48,17 +60,19 @@ function ReservationForm({ maxCapacity, username, userImg, isEdit }) {
           <div>Anything we should know about your stay?</div>
           <textarea
             defaultValue={
-              pathname.includes(reservedCabinId) ? reservationMessage : ""
+              pathname.includes(`/cabins/${reservedCabinId}`)
+                ? reservationMessage
+                : ""
             }
             onChange={(e) => setReservationMessage(e.target.value)}
             className="h-20 bg-primary-200 px-4 rounded-sm py-4 text-primary-900"
             placeholder="Any pets, allergies, special requirements, etc.?"
           ></textarea>
         </div>
-        {(pathname.includes(reservedCabinId) &&
+        {(pathname.includes(`/cabins/${reservedCabinId}`) &&
           reservedDate?.from &&
           guestNum) ||
-        isEdit ? (
+        (isEdit && reservedDate?.from) ? (
           <div className="flex-1 flex justify-end pt-7 ">
             <button className="bg-accent-500 text-primary-800 text-lg px-5 py-1 rounded-sm hover:bg-accent-600">
               {isEdit ? `Update Now` : `Reserve now`}

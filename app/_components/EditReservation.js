@@ -2,6 +2,7 @@ import DateSelector from "@/app/_components/DateSelector";
 import ReservationForm from "@/app/_components/ReservationForm";
 import {
   getBookedDatesByBookingIdExcludeOwn,
+  getBooking,
   getCabinFromBookingId,
   getReservationRangeByBookingId,
 } from "@/app/_libs/data-service";
@@ -14,11 +15,13 @@ async function EditReservation({ bookingId }) {
     },
     reservedRange,
     bookedDates,
+    { numGuests },
     session,
   ] = await Promise.all([
     getCabinFromBookingId(bookingId),
     getReservationRangeByBookingId(bookingId),
     getBookedDatesByBookingIdExcludeOwn(bookingId),
+    getBooking(bookingId),
     auth(),
   ]);
   // console.log(bookedDates);
@@ -46,6 +49,7 @@ async function EditReservation({ bookingId }) {
         username={session.user.name}
         userImg={session.user.image}
         isEdit={true}
+        numGuests={numGuests}
       />
     </>
   );

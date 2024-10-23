@@ -101,7 +101,8 @@ function DateSelector({
               ]
         }
         selected={
-          (pathname.includes(reservedCabinId) || isEdit) && reservedDate
+          (pathname.includes(`/cabins/${reservedCabinId}`) || isEdit) &&
+          reservedDate
         }
         onSelect={(range) => {
           handleSelect(range);
@@ -134,7 +135,8 @@ function DateSelector({
               /night
             </span>
           </div>
-          {((pathname.includes(reservedCabinId) && reservedDate?.from) ||
+          {((pathname.includes(`/cabins/${reservedCabinId}`) &&
+            reservedDate?.from) ||
             (isEdit && reservedDate?.from) ||
             rsrange) && (
             <div className="flex bg-accent-600 px-3 py-2 font-bold text-xl">
@@ -143,7 +145,8 @@ function DateSelector({
             </div>
           )}
         </div>
-        {((pathname.includes(reservedCabinId) && reservedDate?.from) ||
+        {((pathname.includes(`/cabins/${reservedCabinId}`) &&
+          reservedDate?.from) ||
           (isEdit && reservedDate?.from) ||
           rsrange) && (
           <div className="flex gap-5 items-center">
