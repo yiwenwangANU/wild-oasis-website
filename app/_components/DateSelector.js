@@ -20,6 +20,10 @@ function DateSelector({
   isEdit,
   tomorrow,
 }) {
+  const pathname = usePathname();
+  const [rsrange, setRsrange] = useState(reservedRange);
+  const [bookedDateBefore, setBookedDateBefore] = useState("");
+  const [bookedDateAfter, setBookedDateAfter] = useState("");
   const {
     reservedCabinId,
     setReservedCabinId,
@@ -34,12 +38,30 @@ function DateSelector({
     setTotalDays,
   } = useReservation();
 
+  // if in edit mode, get reserved date from reserved range, and calculate total days and price
   useEffect(() => {
-    if (reservedRange && isEdit) setReservedDate(reservedRange);
-  }, [reservedRange, setReservedDate, isEdit]);
-  console.log(reservedRange);
+    if (reservedRange && isEdit) {
+      setReservedDate(reservedRange);
+      setTotalDays(differenceInDays(reservedRange.to, reservedRange.from) + 1);
+      setReservationPrice(
+        (differenceInDays(reservedRange.to, reservedRange.from) + 1) *
+          (regularPrice - discount)
+      );
+    }
+  }, [
+    reservedRange,
+    setReservedDate,
+    isEdit,
+    setTotalDays,
+    setReservationPrice,
+    discount,
+    regularPrice,
+  ]);
+
   const handleSelect = (range) => {
     if (!range) return;
+
+    // disable the date from selection that will includes booked dates
     setBookedDateBefore(getNearestDateOnLeft(range.from, bookedDates));
     setBookedDateAfter(getNearestDateOnRight(range.from, bookedDates));
 
@@ -51,13 +73,17 @@ function DateSelector({
     );
     setReservedCabinId(cabinId);
     setReservedCabinImage(image);
-    reservedRange = null;
+
+    // clear the reservation range if in edit mode
+    setRsrange(null);
   };
 
-  const pathname = usePathname();
-  const [bookedDateBefore, setBookedDateBefore] = useState("");
-  const [bookedDateAfter, setBookedDateAfter] = useState("");
-
+  const handleClear = () => {
+    clearDateSelection();
+    setRsrange(null);
+    setBookedDateBefore("");
+    setBookedDateAfter("");
+  };
   return (
     <div className="flex flex-col">
       <DayPicker
@@ -75,7 +101,7 @@ function DateSelector({
         onSelect={(range) => {
           handleSelect(range);
         }}
-        className="scale-75 -mx-10"
+        className="scale-75 mx-auto"
         classNames={{
           today: `text-accent-0`,
           week: `text-xl`,
@@ -103,19 +129,23 @@ function DateSelector({
               /night
             </span>
           </div>
-          {pathname.includes(reservedCabinId) && reservedDate?.from && (
+          {((pathname.includes(reservedCabinId) && reservedDate?.from) ||
+            (isEdit && reservedDate?.from) ||
+            rsrange) && (
             <div className="flex bg-accent-600 px-3 py-2 font-bold text-xl">
               <XMarkIcon className="w-5 " />
               {totalDays}
             </div>
           )}
         </div>
-        {pathname.includes(reservedCabinId) && reservedDate?.from && (
+        {((pathname.includes(reservedCabinId) && reservedDate?.from) ||
+          (isEdit && reservedDate?.from) ||
+          rsrange) && (
           <div className="flex gap-5 items-center">
             <div className="font-bold text-lg">TOTAL ${reservationPrice}</div>
             <button
               className="border border-primary-700 px-3 py-1"
-              onClick={clearDateSelection}
+              onClick={handleClear}
             >
               Clear
             </button>

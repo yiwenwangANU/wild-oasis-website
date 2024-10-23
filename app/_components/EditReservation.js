@@ -41,6 +41,7 @@ async function EditReservation({ bookingId }) {
         maxCapacity={maxCapacity}
         username={session.user.name}
         userImg={session.user.image}
+        isEdit={true}
       />
     </>
   );

@@ -3,7 +3,7 @@
 import { useReservation } from "@/app/_components/ReservationContext";
 import { usePathname } from "next/navigation";
 
-function ReservationForm({ maxCapacity, username, userImg }) {
+function ReservationForm({ maxCapacity, username, userImg, isEdit }) {
   const guestList = Array.from({ length: maxCapacity }, (_, i) => {
     return { name: `${i + 1} guest${i === 0 ? "" : "s"}`, value: i + 1 };
   });
@@ -19,13 +19,15 @@ function ReservationForm({ maxCapacity, username, userImg }) {
 
   return (
     <div className="flex flex-col bg-primary-900 flex-1">
-      <div className="bg-primary-800 flex justify-between h-10 text-primary-300 px-12 py-5 items-center">
-        <div>Loggedin in as</div>
-        <div className="flex items-center gap-4">
-          <img className="rounded-2xl w-8" src={userImg} alt="" />
-          <div>{username}</div>
+      {!isEdit && (
+        <div className="bg-primary-800 flex justify-between h-10 text-primary-300 px-12 py-5 items-center">
+          <div>Loggedin in as</div>
+          <div className="flex items-center gap-4">
+            <img className="rounded-2xl w-8" src={userImg} alt="" />
+            <div>{username}</div>
+          </div>
         </div>
-      </div>
+      )}
       <form className="px-12 py-7">
         <div className="flex flex-col gap-4">
           <div>How many guests?</div>
@@ -53,12 +55,13 @@ function ReservationForm({ maxCapacity, username, userImg }) {
             placeholder="Any pets, allergies, special requirements, etc.?"
           ></textarea>
         </div>
-        {pathname.includes(reservedCabinId) &&
-        reservedDate?.from &&
-        guestNum ? (
+        {(pathname.includes(reservedCabinId) &&
+          reservedDate?.from &&
+          guestNum) ||
+        isEdit ? (
           <div className="flex-1 flex justify-end pt-7 ">
             <button className="bg-accent-500 text-primary-800 text-lg px-5 py-1 rounded-sm hover:bg-accent-600">
-              Reserve now
+              {isEdit ? `Update Now` : `Reserve now`}
             </button>
           </div>
         ) : (
