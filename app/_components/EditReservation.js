@@ -22,6 +22,9 @@ async function EditReservation({ bookingId }) {
     auth(),
   ]);
   // console.log(bookedDates);
+  const today = new Date();
+  today.setUTCDate(today.getUTCDate());
+  today.setUTCHours(0, 0, 0, 0);
   const tomorrow = new Date();
   tomorrow.setUTCDate(tomorrow.getUTCDate() + 1);
   tomorrow.setUTCHours(0, 0, 0, 0);
@@ -35,6 +38,7 @@ async function EditReservation({ bookingId }) {
         reservedRange={reservedRange}
         isEdit={true}
         tomorrow={tomorrow}
+        today={today}
       />
 
       <ReservationForm

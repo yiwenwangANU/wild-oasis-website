@@ -19,6 +19,7 @@ function DateSelector({
   reservedRange,
   isEdit,
   tomorrow,
+  today,
 }) {
   const pathname = usePathname();
   const [rsrange, setRsrange] = useState(reservedRange);
@@ -89,12 +90,16 @@ function DateSelector({
       <DayPicker
         mode="range"
         numberOfMonths={2}
-        disabled={[
-          { before: tomorrow },
-          { before: bookedDateBefore },
-          { after: bookedDateAfter },
-          ...bookedDates,
-        ]}
+        disabled={
+          rsrange
+            ? [{ before: tomorrow }, { after: today }]
+            : [
+                { before: tomorrow },
+                { before: bookedDateBefore },
+                { after: bookedDateAfter },
+                ...bookedDates,
+              ]
+        }
         selected={
           (pathname.includes(reservedCabinId) || isEdit) && reservedDate
         }
