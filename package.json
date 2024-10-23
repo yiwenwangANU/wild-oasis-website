@@ -10,6 +10,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@date-fns/utc": "^2.1.0",
     "@heroicons/react": "^2.1.5",
     "@supabase/supabase-js": "^2.45.4",
     "date-fns": "^4.1.0",

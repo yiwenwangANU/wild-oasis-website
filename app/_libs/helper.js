@@ -1,3 +1,4 @@
+import { UTCDate } from "@date-fns/utc";
 import { isAfter, isBefore, max, min } from "date-fns";
 
 export function formatDaysDifference(daysDifference) {
@@ -27,17 +28,13 @@ export function formatDaysDifference(daysDifference) {
 }
 
 export function toUTCDate(date) {
-  return new Date(
-    Date.UTC(
-      date.getFullYear(),
-      date.getMonth(),
-      date.getDate(),
-      date.getHours(),
-      date.getMinutes(),
-      date.getSeconds(),
-      date.getMilliseconds()
-    )
+  const utcDate = new UTCDate(
+    date.getFullYear(),
+    date.getMonth(),
+    date.getDate()
   );
+
+  return utcDate;
 }
 
 export function getNearestDateOnLeft(targetDate, bookedDates) {

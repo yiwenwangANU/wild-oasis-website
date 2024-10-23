@@ -7,11 +7,8 @@ import { differenceInDays } from "date-fns";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import {
-  getNearestDateOnLeft,
-  getNearestDateOnRight,
-  toUTCDate,
-} from "../_libs/helper";
+import { getNearestDateOnLeft, getNearestDateOnRight } from "../_libs/helper";
+
 function DateSelector({
   cabinId,
   name,
@@ -40,30 +37,27 @@ function DateSelector({
   useEffect(() => {
     if (reservedRange && isEdit) setReservedDate(reservedRange);
   }, [reservedRange, setReservedDate, isEdit]);
-
+  console.log(reservedRange);
   const handleSelect = (range) => {
     if (!range) return;
-    const utcFrom = toUTCDate(range.from);
-    const utcTo = toUTCDate(range.to);
-
     setBookedDateBefore(getNearestDateOnLeft(range.from, bookedDates));
     setBookedDateAfter(getNearestDateOnRight(range.from, bookedDates));
 
-    setTotalDays(differenceInDays(utcFrom, utcTo) + 1);
-    setReservedDate({ from: utcFrom, to: utcTo });
+    setTotalDays(differenceInDays(range.to, range.from) + 1);
+    setReservedDate(range);
     setReservedCabin(name);
     setReservationPrice(
-      (differenceInDays(utcFrom, utcTo) + 1) * (regularPrice - discount)
+      (differenceInDays(range.to, range.from) + 1) * (regularPrice - discount)
     );
     setReservedCabinId(cabinId);
     setReservedCabinImage(image);
     reservedRange = null;
   };
-  console.log(reservedDate);
+
   const pathname = usePathname();
   const [bookedDateBefore, setBookedDateBefore] = useState("");
   const [bookedDateAfter, setBookedDateAfter] = useState("");
-  // console.log(bookedDates);
+
   return (
     <div className="flex flex-col">
       <DayPicker

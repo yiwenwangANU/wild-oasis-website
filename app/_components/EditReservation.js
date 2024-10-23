@@ -9,7 +9,9 @@ import { auth } from "@/app/_libs/auth";
 
 async function EditReservation({ bookingId }) {
   const [
-    { maxCapacity, regularPrice, discount },
+    {
+      cabins: { maxCapacity, regularPrice, discount },
+    },
     reservedRange,
     bookedDates,
     session,
