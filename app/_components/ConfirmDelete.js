@@ -1,25 +1,40 @@
 import { useRouter } from "next/navigation";
+import { useTransition } from "react";
 import toast from "react-hot-toast";
+import SpinnerMini from "./SpinnerMini";
+import { deleteReservation } from "../_libs/actions";
 
 function ConfirmDelete({ id }) {
   const router = useRouter();
-  const handleDelete = async (id) => {
-    try {
-      const response = await fetch("/api/delete-reservation", {
-        method: "POST",
-        body: JSON.stringify(id),
-      });
-      const result = await response.json();
-      if (response.ok) {
+  const [isPending, startTransition] = useTransition();
+  const handleDelete = () => {
+    startTransition(async () => {
+      try {
+        await deleteReservation(id);
         toast.success("Reservation deleted successfully");
-        // After successful profile update
         router.refresh();
-      } else {
-        toast.error(result.message);
+      } catch (error) {
+        toast.error(error.message || "Failed to delete reservation");
+        console.error("Deletion error:", error);
       }
-    } catch (error) {
-      console.error("Network error:", error);
-    }
+    });
+
+    // try {
+    //   const response = await fetch("/api/delete-reservation", {
+    //     method: "POST",
+    //     body: JSON.stringify(id),
+    //   });
+    //   const result = await response.json();
+    //   if (response.ok) {
+    //     toast.success("Reservation deleted successfully");
+    //     // After successful profile update
+    //     router.refresh();
+    //   } else {
+    //     toast.error(result.message);
+    //   }
+    // } catch (error) {
+    //   console.error("Network error:", error);
+    // }
   };
   return (
     <div>
@@ -38,7 +53,13 @@ function ConfirmDelete({ id }) {
           className="border border-primary-800 px-3 py-2 bg-red-600 text-white rounded-md hover:bg-red-800"
           onClick={() => handleDelete(id)}
         >
-          Delete
+          {isPending ? (
+            <span className="mx-auto">
+              <SpinnerMini />
+            </span>
+          ) : (
+            "Delete"
+          )}
         </button>
       </div>
     </div>
