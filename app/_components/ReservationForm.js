@@ -2,6 +2,10 @@
 
 import { useReservation } from "@/app/_components/ReservationContext";
 import { usePathname } from "next/navigation";
+import { updateReservation } from "../_libs/actions";
+import { useTransition } from "react";
+import toast from "react-hot-toast";
+import Image from "next/image";
 
 function ReservationForm({
   maxCapacity,
@@ -9,6 +13,7 @@ function ReservationForm({
   userImg,
   isEdit,
   numGuests,
+  bookingId,
 }) {
   const guestList = Array.from({ length: maxCapacity }, (_, i) => {
     return { name: `${i + 1} guest${i === 0 ? "" : "s"}`, value: i + 1 };
@@ -22,14 +27,37 @@ function ReservationForm({
     setReservationMessage,
   } = useReservation();
   const pathname = usePathname();
+  const [isPending, startTransition] = useTransition();
 
+  const handleUpdate = (e) => {
+    e.preventDefault();
+    const reservation = {
+      startDate: reservedDate.from,
+      endDate: reservedDate.to,
+      numGuests: guestNum ? parseInt(guestNum) : numGuests,
+      observations: reservationMessage,
+    };
+    console.log(reservation);
+    startTransition(async () => {
+      try {
+        await updateReservation(bookingId, reservation);
+        toast.success("Reservation updated successfully");
+        // router.refresh();
+      } catch (error) {
+        toast.error(error.message || "Failed to update reservation");
+        console.error("Update error:", error);
+      }
+    });
+  };
   return (
     <div className="flex flex-col bg-primary-900 flex-1">
       {!isEdit && (
         <div className="bg-primary-800 flex justify-between h-10 text-primary-300 px-12 py-5 items-center">
           <div>Loggedin in as</div>
-          <div className="flex items-center gap-4">
-            <img className="rounded-2xl w-8" src={userImg} alt="" />
+          <div className="flex items-center gap-4 ">
+            <div className="relative w-8 h-8">
+              <Image className="rounded-2xl" fill src={userImg} alt="" />
+            </div>
             <div>{username}</div>
           </div>
         </div>
@@ -74,7 +102,10 @@ function ReservationForm({
           guestNum) ||
         (isEdit && reservedDate?.from) ? (
           <div className="flex-1 flex justify-end pt-7 ">
-            <button className="bg-accent-500 text-primary-800 text-lg px-5 py-1 rounded-sm hover:bg-accent-600">
+            <button
+              className="bg-accent-500 text-primary-800 text-lg px-5 py-1 rounded-sm hover:bg-accent-600"
+              onClick={handleUpdate}
+            >
               {isEdit ? `Update Now` : `Reserve now`}
             </button>
           </div>

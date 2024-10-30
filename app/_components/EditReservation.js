@@ -50,6 +50,7 @@ async function EditReservation({ bookingId }) {
         userImg={session.user.image}
         isEdit={true}
         numGuests={numGuests}
+        bookingId={bookingId}
       />
     </>
   );
