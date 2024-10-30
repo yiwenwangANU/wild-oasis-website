@@ -15,7 +15,7 @@ async function EditReservation({ bookingId }) {
     },
     reservedRange,
     bookedDates,
-    { numGuests },
+    { numGuests, observations },
     session,
   ] = await Promise.all([
     getCabinFromBookingId(bookingId),
@@ -50,6 +50,7 @@ async function EditReservation({ bookingId }) {
         userImg={session.user.image}
         isEdit={true}
         numGuests={numGuests}
+        observations={observations}
         bookingId={bookingId}
       />
     </>

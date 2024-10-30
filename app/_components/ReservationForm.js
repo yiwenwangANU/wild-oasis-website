@@ -13,6 +13,7 @@ function ReservationForm({
   userImg,
   isEdit,
   numGuests,
+  observations,
   bookingId,
 }) {
   const guestList = Array.from({ length: maxCapacity }, (_, i) => {
@@ -35,14 +36,13 @@ function ReservationForm({
       startDate: reservedDate.from,
       endDate: reservedDate.to,
       numGuests: guestNum ? parseInt(guestNum) : numGuests,
-      observations: reservationMessage,
+      observations: reservationMessage ? reservationMessage : observations,
     };
     console.log(reservation);
     startTransition(async () => {
       try {
         await updateReservation(bookingId, reservation);
         toast.success("Reservation updated successfully");
-        // router.refresh();
       } catch (error) {
         toast.error(error.message || "Failed to update reservation");
         console.error("Update error:", error);
@@ -88,7 +88,9 @@ function ReservationForm({
           <div>Anything we should know about your stay?</div>
           <textarea
             defaultValue={
-              pathname.includes(`/cabins/${reservedCabinId}`)
+              observations
+                ? observations
+                : pathname.includes(`/cabins/${reservedCabinId}`)
                 ? reservationMessage
                 : ""
             }

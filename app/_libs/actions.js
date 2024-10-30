@@ -68,7 +68,6 @@ export async function updateReservation(id, reservation) {
     throw new Error("Client can only update his/her own reservation.");
 
   const { startDate, endDate, numGuests, observations } = reservation;
-
   const { error } = await supabase
     .from("bookings")
     .update({ startDate, endDate, numGuests, observations })
