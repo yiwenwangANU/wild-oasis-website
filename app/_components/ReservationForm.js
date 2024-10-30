@@ -6,6 +6,8 @@ import { updateReservation } from "../_libs/actions";
 import { useTransition } from "react";
 import toast from "react-hot-toast";
 import Image from "next/image";
+import { toUTCDate } from "../_libs/helper";
+import { useRouter } from "next/navigation";
 
 function ReservationForm({
   maxCapacity,
@@ -29,12 +31,13 @@ function ReservationForm({
   } = useReservation();
   const pathname = usePathname();
   const [isPending, startTransition] = useTransition();
+  const router = useRouter();
 
   const handleUpdate = (e) => {
     e.preventDefault();
     const reservation = {
-      startDate: reservedDate.from,
-      endDate: reservedDate.to,
+      startDate: toUTCDate(reservedDate.from),
+      endDate: toUTCDate(reservedDate.to),
       numGuests: guestNum ? parseInt(guestNum) : numGuests,
       observations: reservationMessage ? reservationMessage : observations,
     };
@@ -43,6 +46,7 @@ function ReservationForm({
       try {
         await updateReservation(bookingId, reservation);
         toast.success("Reservation updated successfully");
+        router.push("/account/reservations");
       } catch (error) {
         toast.error(error.message || "Failed to update reservation");
         console.error("Update error:", error);
