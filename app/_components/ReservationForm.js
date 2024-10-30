@@ -8,6 +8,7 @@ import toast from "react-hot-toast";
 import Image from "next/image";
 import { toUTCDate } from "../_libs/helper";
 import { useRouter } from "next/navigation";
+import SpinnerMini from "./SpinnerMini";
 
 function ReservationForm({
   maxCapacity,
@@ -109,10 +110,16 @@ function ReservationForm({
         (isEdit && reservedDate?.from) ? (
           <div className="flex-1 flex justify-end pt-7 ">
             <button
-              className="bg-accent-500 text-primary-800 text-lg px-5 py-1 rounded-sm hover:bg-accent-600"
+              className="bg-accent-500 text-primary-800 text-lg px-5 py-1 rounded-sm w-40 h-9 flex items-center justify-center hover:bg-accent-600"
               onClick={handleUpdate}
             >
-              {isEdit ? `Update Now` : `Reserve now`}
+              {isPending ? (
+                <SpinnerMini />
+              ) : isEdit ? (
+                `Update Now`
+              ) : (
+                `Reserve now`
+              )}
             </button>
           </div>
         ) : (
