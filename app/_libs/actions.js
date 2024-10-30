@@ -67,10 +67,11 @@ export async function updateReservation(id, reservation) {
   if (session.user?.guestId !== guestData.guestId)
     throw new Error("Client can only update his/her own reservation.");
 
-  const { startDate, endDate, numGuests, observations } = reservation;
+  const { startDate, endDate, numNights, numGuests, observations } =
+    reservation;
   const { error } = await supabase
     .from("bookings")
-    .update({ startDate, endDate, numGuests, observations })
+    .update({ startDate, endDate, numNights, numGuests, observations })
     .eq("id", id)
     .select();
   if (error) {

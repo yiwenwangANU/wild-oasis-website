@@ -6,7 +6,7 @@ import { updateReservation } from "../_libs/actions";
 import { useTransition } from "react";
 import toast from "react-hot-toast";
 import Image from "next/image";
-import { toUTCDate } from "../_libs/helper";
+import { getNumOfNights, toUTCDate } from "../_libs/helper";
 import { useRouter } from "next/navigation";
 import SpinnerMini from "./SpinnerMini";
 
@@ -39,6 +39,10 @@ function ReservationForm({
     const reservation = {
       startDate: toUTCDate(reservedDate.from),
       endDate: toUTCDate(reservedDate.to),
+      numNights: getNumOfNights(
+        toUTCDate(reservedDate.from),
+        toUTCDate(reservedDate.to)
+      ),
       numGuests: guestNum ? parseInt(guestNum) : numGuests,
       observations: reservationMessage ? reservationMessage : observations,
     };
@@ -53,6 +57,11 @@ function ReservationForm({
         console.error("Update error:", error);
       }
     });
+  };
+
+  const handleReserve = (e) => {
+    e.preventDefault();
+    const reservation = { startDate, endDate };
   };
   return (
     <div className="flex flex-col bg-primary-900 flex-1">

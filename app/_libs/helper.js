@@ -1,5 +1,5 @@
 import { UTCDate } from "@date-fns/utc";
-import { isAfter, isBefore, max, min } from "date-fns";
+import { differenceInDays, isAfter, isBefore, max, min } from "date-fns";
 
 export function formatDaysDifference(daysDifference) {
   if (daysDifference >= 60) {
@@ -35,6 +35,10 @@ export function toUTCDate(date) {
   );
 
   return utcDate;
+}
+
+export function getNumOfNights(startDate, endDate) {
+  return differenceInDays(endDate, startDate) + 1;
 }
 
 export function getNearestDateOnLeft(targetDate, bookedDates) {
