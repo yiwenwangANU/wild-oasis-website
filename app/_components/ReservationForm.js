@@ -2,11 +2,11 @@
 
 import { useReservation } from "@/app/_components/ReservationContext";
 import { usePathname } from "next/navigation";
-import { updateReservation } from "../_libs/actions";
+import { createReservation, updateReservation } from "../_libs/actions";
 import { useTransition } from "react";
 import toast from "react-hot-toast";
 import Image from "next/image";
-import { getNumOfNights, toUTCDate } from "../_libs/helper";
+import { getCabinIdFromPath, getNumOfNights, toUTCDate } from "../_libs/helper";
 import { useRouter } from "next/navigation";
 import SpinnerMini from "./SpinnerMini";
 
@@ -25,10 +25,12 @@ function ReservationForm({
   const {
     reservedCabinId,
     reservedDate,
+    reservationPrice,
     guestNum,
     setGuestNum,
     reservationMessage,
     setReservationMessage,
+    clearReservation,
   } = useReservation();
   const pathname = usePathname();
   const [isPending, startTransition] = useTransition();
@@ -53,7 +55,7 @@ function ReservationForm({
         toast.success("Reservation updated successfully");
         router.push("/account/reservations");
       } catch (error) {
-        toast.error(error.message || "Failed to update reservation");
+        toast.error("Failed to update reservation");
         console.error("Update error:", error);
       }
     });
@@ -61,7 +63,35 @@ function ReservationForm({
 
   const handleReserve = (e) => {
     e.preventDefault();
-    const reservation = { startDate, endDate };
+    const reservation = {
+      startDate: toUTCDate(reservedDate.from),
+      endDate: toUTCDate(reservedDate.to),
+      numNights: getNumOfNights(
+        toUTCDate(reservedDate.from),
+        toUTCDate(reservedDate.to)
+      ),
+      numGuests: parseInt(guestNum),
+      cabinPrice: reservationPrice,
+      extrasPrice: 0,
+      totalPrice: reservationPrice,
+      status: "unconfirmed",
+      hasBreakfast: false,
+      isPaid: false,
+      observations: reservationMessage,
+      cabinId: parseInt(reservedCabinId),
+    };
+    console.log(reservation);
+    startTransition(async () => {
+      try {
+        await createReservation(reservation);
+        clearReservation();
+        toast.success("Reservation created successfully");
+        router.push("/account/reservations");
+      } catch (error) {
+        toast.error("Failed to create reservation");
+        console.error("Insert error:", error);
+      }
+    });
   };
   return (
     <div className="flex flex-col bg-primary-900 flex-1">
@@ -120,7 +150,7 @@ function ReservationForm({
           <div className="flex-1 flex justify-end pt-7 ">
             <button
               className="bg-accent-500 text-primary-800 text-lg px-5 py-1 rounded-sm w-40 h-9 flex items-center justify-center hover:bg-accent-600"
-              onClick={handleUpdate}
+              onClick={isEdit ? handleUpdate : handleReserve}
             >
               {isPending ? (
                 <SpinnerMini />

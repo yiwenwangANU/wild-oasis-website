@@ -79,3 +79,48 @@ export async function updateReservation(id, reservation) {
     throw new Error("Reservation could not be updated.");
   }
 }
+
+export async function createReservation(reservation) {
+  const session = await auth();
+  if (!session) throw new Error("Client must logged in to update reservation.");
+
+  const {
+    startDate,
+    endDate,
+    numNights,
+    numGuests,
+    cabinPrice,
+    extrasPrice,
+    totalPrice,
+    status,
+    hasBreakfast,
+    isPaid,
+    observations,
+    cabinId,
+  } = reservation;
+
+  const { error } = await supabase
+    .from("bookings")
+    .insert([
+      {
+        startDate,
+        endDate,
+        numNights,
+        numGuests,
+        cabinPrice,
+        extrasPrice,
+        totalPrice,
+        status,
+        hasBreakfast,
+        isPaid,
+        observations,
+        cabinId,
+        guestId: session.user?.guestId,
+      },
+    ])
+    .select();
+  if (error) {
+    console.log(error);
+    throw new Error("Reservation could not be created.");
+  }
+}

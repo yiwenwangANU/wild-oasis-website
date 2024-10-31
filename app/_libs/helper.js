@@ -41,6 +41,10 @@ export function getNumOfNights(startDate, endDate) {
   return differenceInDays(endDate, startDate) + 1;
 }
 
+export function getCabinIdFromPath(path) {
+  return parseInt(path.split("/")[2]);
+}
+
 export function getNearestDateOnLeft(targetDate, bookedDates) {
   if (!targetDate || !bookedDates) return;
   const datesBeforeTarget = bookedDates.filter((date) =>
