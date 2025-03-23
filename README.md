@@ -6,6 +6,7 @@ This project is a full-stack project built with **Next.js** and styled using **T
 
 The Admin Penal part of this website sharing the same database can be found here:
 https://github.com/yiwenwangANU/wild-oasis-v2
+
 This project was built following the course on udemy:
 https://www.udemy.com/course/the-ultimate-react-course/
 
@@ -36,13 +37,11 @@ https://www.udemy.com/course/the-ultimate-react-course/
 Clone the repository and install the dependencies:
 
 ```
-
 git clone https://github.com/yiwenwangANU/wild-oasis-website.git
 
 cd rest_api_frontend
 
 npm install
-
 ```
 
 ### Environment Variables
@@ -61,9 +60,7 @@ Create .env.local file in the root dir that contains the following variables
 Start the development server:
 
 ```
-
 npm run dev
-
 ```
 
 Your app will be available at http://localhost:3000.
