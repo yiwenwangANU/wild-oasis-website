@@ -1,36 +1,69 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Wild Oasis
 
-## Getting Started
+Welcome to the Wild Oasis! Wild Oasis is a hotel booking app, allowing users to search and reserve accommodations with a user-friendly interface.
 
-First, run the development server:
+This project is a full-stack project built with **Next.js** and styled using **Tailwind CSS**. It leverages **Auth.js** along with Google **OAuth** for secure user authentication, while **Supabase** powers the backend to efficiently handle data fetching and posting. This setup delivers a responsive, reliable, and secure user experience.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+The Admin Penal part of this website sharing the same database can be found here:
+https://github.com/yiwenwangANU/wild-oasis-v2
+This project was built following the course on udemy:
+https://www.udemy.com/course/the-ultimate-react-course/
+
+## Features ✨
+
+- **Responsive UI:** Developed with Next.js and styled using Tailwind CSS
+
+- **Data Management:** Integrated Supabase for data fetching and posting.
+
+- **Authentication:** Protect routes using NextAuth middleware.
+
+- **Authorization :** Login user using Google OAuth, logined user is authorized to book the cabins
+
+## Preview
+
+![Screenshot 0](./screenshots/Screenshot0.jpg)
+
+![Screenshot 1](./screenshots/Screenshot1.jpg)
+
+![Screenshot 3](./screenshots/Screenshot3.jpg)
+
+![Screenshot 2](./screenshots/Screenshot2.jpg)
+
+## Getting Started 🚀
+
+### Installation
+
+Clone the repository and install the dependencies:
+
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+git clone https://github.com/yiwenwangANU/wild-oasis-website.git
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+cd rest_api_frontend
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+npm install
 
-## Learn More
+```
 
-To learn more about Next.js, take a look at the following resources:
+### Environment Variables
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Create .env.local file in the root dir that contains the following variables
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+`AUTH_GOOGLE_ID` for Google OAuth
+`AUTH_GOOGLE_SECRET` for Google OAuth
+`NEXTAUTH_SECRET` for NextAuth
+`NEXTAUTH_URL` for NextAuth
+`SUPABASE_KEY` for supabase access
+`SUPABASE_URL` for supabase access
 
-## Deploy on Vercel
+### Running Locally
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Start the development server:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+```
+
+npm run dev
+
+```
+
+Your app will be available at http://localhost:3000.
