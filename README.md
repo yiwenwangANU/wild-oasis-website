@@ -49,12 +49,12 @@ npm install
 
 Create .env.local file in the root dir that contains the following variables
 
-`AUTH_GOOGLE_ID` for Google OAuth
-`AUTH_GOOGLE_SECRET` for Google OAuth
-`NEXTAUTH_SECRET` for NextAuth
-`NEXTAUTH_URL` for NextAuth
-`SUPABASE_KEY` for supabase access
-`SUPABASE_URL` for supabase access
+- `AUTH_GOOGLE_ID` for Google OAuth
+- `AUTH_GOOGLE_SECRET` for Google OAuth
+- `NEXTAUTH_SECRET` for NextAuth
+- `NEXTAUTH_URL` for NextAuth
+- `SUPABASE_KEY` for supabase access
+- `SUPABASE_URL` for supabase access
 
 ### Running Locally
 
